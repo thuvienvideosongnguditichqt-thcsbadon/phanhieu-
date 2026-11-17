@@ -4,11 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Dấu ấn di sản Quảng Trị</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Lora:wght@600;700&display=swap">
 <style>
 /* Layout: dải xanh Trường Sơn mở đầu bằng vĩ tuyến 17; bên dưới là sơ đồ Bắc–Nam cạnh danh sách thẻ; mỗi di tích có trang riêng theo hash. */
 :root{
-  --font:"Be Vietnam Pro","Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif;
+  --font:"Be Vietnam Pro","Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif; --serif:"Lora",Georgia,"Times New Roman",serif;
+  --gold:#e8b04a; --ridge1:#2a6b4e; --ridge2:#1c4b37; --hero-g1:#0e3125; --hero-g2:#1b5a41; --hero-g3:#6e3a14;
   --bg:#f2f6f1; --surface:#ffffff; --ink:#13241b; --muted:#506157; --line:#d2dcd4;
   --green:#1f5a42; --green-2:#2e7a58; --soft:#e2eee5;
   --laterite:#98481a; --laterite-soft:#f4e5d9;
@@ -26,6 +27,7 @@
     --focus:#8ab4ff; --btn-bg:#86d2a6; --btn-fg:#0d1712;
     --hero-bg:#0a1f16; --hero-ink:#e9f3ec; --hero-muted:#9cb8a8; --hero-line:#e9a46e; --hero-stroke:#2f6049;
     --sea:#102219; --land:#16261d; color-scheme:dark;
+    --gold:#f0c06a; --ridge1:#173b2b; --ridge2:#0f2a1e; --hero-g1:#08170f; --hero-g2:#0f3324; --hero-g3:#4a2810;
   }
 }
 :root[data-theme="dark"]{
@@ -35,6 +37,7 @@
   --focus:#8ab4ff; --btn-bg:#86d2a6; --btn-fg:#0d1712;
   --hero-bg:#0a1f16; --hero-ink:#e9f3ec; --hero-muted:#9cb8a8; --hero-line:#e9a46e; --hero-stroke:#2f6049;
   --sea:#102219; --land:#16261d; color-scheme:dark;
+  --gold:#f0c06a; --ridge1:#173b2b; --ridge2:#0f2a1e; --hero-g1:#08170f; --hero-g2:#0f3324; --hero-g3:#4a2810;
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
@@ -62,10 +65,13 @@ a{color:inherit}
 @media (min-width:1060px){ .nav{order:0;width:auto;margin-left:auto;min-width:0} .top .wrap{flex-wrap:nowrap} }
 
 /* mở đầu */
-.hero{background:var(--hero-bg);color:var(--hero-ink);padding-block:48px 56px;position:relative;overflow:hidden}
+.hero{background:linear-gradient(165deg,var(--hero-g1) 0%,var(--hero-g2) 58%,var(--hero-g3) 135%);color:var(--hero-ink);padding-block:56px 110px;position:relative;overflow:hidden}
+.hero::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 82% 18%,rgba(232,176,74,.22),transparent 38%);pointer-events:none}
+.hero .wrap{position:relative}
+.ridge{position:absolute;left:0;right:0;bottom:-1px;width:100%;height:96px;display:block}
 .hero .wrap{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:32px;align-items:center}
-.eyebrow{font-size:.82rem;letter-spacing:.14em;text-transform:uppercase;color:var(--hero-line);font-weight:600}
-.hero h1{font-size:clamp(2.1rem,5.4vw,3.6rem);line-height:1.08;font-weight:800;margin:10px 0 16px;letter-spacing:-.01em}
+.eyebrow{font-size:.82rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);font-weight:600}
+.hero h1{font:700 clamp(2.2rem,5.6vw,3.9rem)/1.08 var(--serif);margin:10px 0 16px;letter-spacing:-.01em}
 .lede{font-size:1.1rem;color:var(--hero-muted);max-width:56ch}
 .hero-cta{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px}
 .btn{min-height:46px;display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:10px 20px;border-radius:10px;border:1.5px solid var(--btn-bg);background:var(--btn-bg);color:var(--btn-fg);text-decoration:none;font:600 .95rem var(--font);cursor:pointer}
@@ -81,7 +87,7 @@ a{color:inherit}
 /* khối chung */
 section{scroll-margin-top:120px}
 .sec{padding-block:48px}
-.sec h2{font-size:clamp(1.5rem,3.4vw,2rem);line-height:1.2;font-weight:700;color:var(--green)}
+.sec h2{font:700 clamp(1.5rem,3.4vw,2.1rem)/1.2 var(--serif);color:var(--green)}
 .sec .intro{color:var(--muted);margin-top:8px;max-width:62ch}
 
 /* công cụ lọc */
@@ -115,7 +121,9 @@ section{scroll-margin-top:120px}
 .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px}
 .card{background:var(--surface);border:1px solid var(--line);border-radius:16px;overflow:hidden;display:flex;flex-direction:column;min-width:0}
 .card.on{border-color:var(--focus);box-shadow:0 0 0 3px color-mix(in srgb,var(--focus) 28%,transparent)}
-.ph{height:92px;display:flex;align-items:flex-end;justify-content:space-between;padding:12px 16px;color:#fff}
+.ph{height:112px;display:flex;align-items:flex-end;justify-content:space-between;padding:12px 16px;color:#fff;position:relative;background-image:radial-gradient(circle at 88% 12%,rgba(255,255,255,.2),transparent 42%)}
+.pico{position:absolute;top:12px;left:14px;width:38px;height:38px;opacity:.92}
+.rd{position:absolute;top:12px;right:12px;background:#fff;color:#1f5a42;font-size:.74rem;font-weight:700;padding:3px 10px;border-radius:999px}
 .ph.bac{background:linear-gradient(135deg,var(--bac-a),var(--bac-b))}
 .ph.nam{background:linear-gradient(135deg,var(--nam-a),var(--nam-b))}
 .ph .num{font-size:2.4rem;font-weight:800;line-height:1;letter-spacing:-.02em;opacity:.95}
@@ -150,6 +158,9 @@ section{scroll-margin-top:120px}
 
 /* trang chi tiết */
 .dwrap{padding-block:28px 56px}
+.wrap.dwrap{max-width:980px}
+.objs,.task,.srcs,.dgrid.one,.story{max-width:none}
+.para p{max-width:72ch}
 .back{display:inline-flex;align-items:center;gap:6px;min-height:44px;color:var(--green);font-weight:600;text-decoration:none}
 .dhead{margin-top:8px;display:flex;flex-wrap:wrap;gap:8px 20px;align-items:flex-end}
 .dhead .big{font-size:clamp(3rem,9vw,5.5rem);font-weight:800;line-height:.9;letter-spacing:-.03em;color:var(--green-2);opacity:.55}
@@ -251,6 +262,84 @@ section{scroll-margin-top:120px}
 footer{background:var(--hero-bg);color:var(--hero-muted);padding-block:28px;font-size:.85rem}
 footer .wrap{display:grid;gap:8px}
 footer b{color:var(--hero-ink)}
+
+/* ===== đợt 2: thanh đọc, giao diện trang chi tiết, mục giáo viên, phiếu in ===== */
+#rbar{position:fixed;top:env(safe-area-inset-top,0px);left:0;height:4px;width:0;background:var(--gold);z-index:40;pointer-events:none}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:28px;max-width:660px}
+.stats div{border-top:2px solid var(--gold);padding-top:8px;display:grid;gap:2px;align-content:start}
+.stats b{font:700 1.6rem/1.1 var(--serif);color:var(--gold)}
+.stats span{font-size:.82rem;color:var(--hero-muted)}
+@media (max-width:560px){ .stats{grid-template-columns:repeat(2,minmax(0,1fr))} }
+.progress{margin:0 0 8px;color:var(--laterite);font-weight:600;font-size:.92rem}
+.dbanner{position:relative;margin-top:10px;border-radius:22px;padding:30px 28px 26px;color:#fff;display:flex;flex-wrap:wrap;gap:6px 22px;align-items:flex-end;overflow:hidden}
+.dbanner.bac{background:linear-gradient(135deg,var(--bac-a),var(--bac-b))}
+.dbanner.nam{background:linear-gradient(135deg,var(--nam-a),var(--nam-b))}
+.dbanner::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 92% 0%,rgba(255,255,255,.22),transparent 45%);pointer-events:none}
+.bico{position:absolute;right:20px;top:16px;width:116px;height:116px;opacity:.2}
+.dbanner .big{position:relative;font:700 clamp(3.2rem,9vw,5.6rem)/.9 var(--serif);color:rgba(255,255,255,.4)}
+.dtitle{position:relative;min-width:0;flex:1 1 320px}
+.dtitle h1{font:700 clamp(1.9rem,4.8vw,3rem)/1.12 var(--serif);color:#fff}
+.dbanner .altn{color:rgba(255,255,255,.88);font-style:italic;font-size:1.05rem;margin-top:4px}
+.dbanner .chips{margin-top:14px}
+.dbanner .chip{background:rgba(255,255,255,.18);color:#fff;font-weight:600}
+.toc{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}
+.tocb{min-height:40px;padding:6px 16px;border:1.5px solid var(--line);background:var(--surface);color:var(--green);border-radius:999px;font:600 .9rem var(--font);cursor:pointer}
+.tocb:hover{border-color:var(--green-2)}
+.objs{margin-top:26px;background:var(--soft);border-radius:18px;padding:20px 22px;max-width:860px}
+.objs h2,.story h2,.srcs h2,.task h2{font:700 1.3rem/1.25 var(--serif);color:var(--green);margin-bottom:10px}
+.objs ul{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.objs li{position:relative;padding-left:30px}
+.objs li::before{content:"✓";position:absolute;left:0;top:0;width:22px;height:22px;border-radius:50%;background:var(--green-2);color:#fff;font-size:.8rem;font-weight:700;display:grid;place-items:center;line-height:1}
+.objs li i,.think li i{display:block;color:var(--muted);font-size:.95rem}
+.story{margin-top:34px;max-width:760px}
+.story:has(.lang2){max-width:none}
+.para{margin-top:20px}
+.para h3{font:700 .95rem/1.3 var(--font);letter-spacing:.06em;text-transform:uppercase;color:var(--laterite)}
+.para h3 small{text-transform:none;letter-spacing:0;font-weight:500;color:var(--muted)}
+.para p{font-size:1.06rem;line-height:1.78;margin-top:6px}
+.para .lbl{display:block;font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:600;margin:6px 0 0}
+.pull{margin:24px 0;padding:18px 24px;border-left:5px solid var(--laterite);background:var(--laterite-soft);border-radius:0 16px 16px 0}
+.pull p{font:700 clamp(1.25rem,3vw,1.6rem)/1.35 var(--serif);color:var(--ink)}
+.pull small{display:block;font:italic 400 1rem var(--font);color:var(--muted);margin-top:4px}
+.pull cite{display:block;margin-top:10px;font-style:normal;font-size:.85rem;color:var(--muted)}
+.task{margin-top:16px;max-width:860px;background:var(--surface);border:1.5px dashed var(--laterite);border-radius:16px;padding:18px 22px}
+.task h2{color:var(--laterite)}
+.task p i{display:block;color:var(--muted);margin-top:6px}
+.dgrid.one{grid-template-columns:minmax(0,1fr);max-width:860px}
+.srcs{margin-top:28px;max-width:860px}
+.srcs ul{margin:0;padding-left:20px;display:grid;gap:8px}
+.srcs a{color:var(--green);overflow-wrap:anywhere}
+.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px}
+.sheet{display:none}
+/* mục dành cho giáo viên */
+.tgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:22px}
+@media (max-width:760px){ .tgrid{grid-template-columns:minmax(0,1fr)} }
+.tcard{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:20px 22px;min-width:0}
+.tcard.wide{grid-column:1/-1}
+.tcard.soft{background:var(--laterite-soft);border-color:transparent}
+.tcard h3{font:700 1.15rem/1.3 var(--serif);color:var(--green);margin-bottom:10px}
+.tcard.soft h3{color:var(--laterite)}
+.tcard p{color:var(--muted);margin-bottom:8px}
+.tcard ul,.tcard ol{margin:0;padding-left:20px;display:grid;gap:8px}
+.tl{list-style:none;padding:0!important;gap:10px!important}
+.tl li b{display:inline-block;min-width:66px;color:var(--laterite)}
+.xgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:12px}
+.xgrid div{background:var(--soft);border-radius:12px;padding:12px 14px;display:grid;gap:4px;align-content:start}
+.xgrid b{color:var(--green)}
+.xgrid span{font-size:.92rem;color:var(--muted)}
+/* phiếu học tập khi in */
+@media print{
+  body.printing{background:#fff;color:#000}
+  body.printing::before,body.printing #rbar,body.printing header.top,body.printing footer,body.printing #home,body.printing .skip{display:none!important}
+  body.printing #detail .dwrap>*:not(.sheet){display:none!important}
+  body.printing .sheet{display:block!important;color:#000;font:400 12pt/1.5 var(--font)}
+  .sheet h1{font:700 18pt/1.3 var(--serif);margin-bottom:6pt}
+  .sheet h2{font:700 12pt/1.3 var(--font);margin:14pt 0 4pt}
+  .sheet ul,.sheet ol{margin:0;padding-left:18pt}
+  .sheet li{margin-bottom:6pt}
+  .wl{height:22pt;border-bottom:1px solid #666}
+  .sline{margin-bottom:6pt}.sfoot{margin-top:16pt;font-size:9pt;color:#444}
+}
 @media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto} *{transition:none!important;animation:none!important} }
 </style>
 </head>
@@ -258,6 +347,7 @@ footer b{color:var(--hero-ink)}
 
 
 <a class="skip" href="#kham-pha" id="skip">Đi tới nội dung</a>
+<div id="rbar" aria-hidden="true"></div>
 <header class="top">
   <div class="wrap">
     <a class="brand" href="#" aria-label="Trang chủ / Home">
@@ -285,6 +375,7 @@ footer b{color:var(--hero-ink)}
           <a class="btn ghost" id="cta2" href="#huong-dan"></a>
         </div>
         <p class="hero-note" id="heronote"></p>
+        <div class="stats" id="stats"></div>
       </div>
       <svg class="hero-art" viewBox="0 0 400 280" role="img" aria-labelledby="arttitle">
         <title id="arttitle">17°</title>
@@ -296,6 +387,7 @@ footer b{color:var(--hero-ink)}
         <text id="artR" x="200" y="196" text-anchor="middle" font-size="13" fill="var(--hero-ink)"></text>
       </svg>
     </div>
+    <svg class="ridge" viewBox="0 0 1200 96" preserveAspectRatio="none" aria-hidden="true"><path fill="var(--ridge1)" d="M0 60 L90 34 L170 52 L270 18 L360 46 L450 24 L560 58 L660 30 L760 54 L860 14 L960 48 L1060 28 L1200 56 V96 H0Z"/><path fill="var(--ridge2)" d="M0 76 L120 58 L220 72 L330 50 L450 74 L560 56 L700 78 L820 52 L940 74 L1060 58 L1200 76 V96 H0Z"/><path fill="var(--bg)" d="M0 90 C300 80 900 80 1200 90 V96 H0Z"/></svg>
   </section>
 
   <section class="sec" id="kham-pha" aria-labelledby="h-explore">
@@ -309,6 +401,7 @@ footer b{color:var(--hero-ink)}
         <div><label for="fv" id="lfv"></label><select id="fv"></select></div>
         <button type="button" class="clear" id="clear"></button>
       </div>
+      <p class="progress" id="progress"></p>
       <div class="status" id="status" role="status" aria-live="polite"></div>
       <div class="views" role="group" aria-label="View">
         <button type="button" id="vmap" aria-pressed="true"></button>
@@ -355,6 +448,14 @@ footer b{color:var(--hero-ink)}
     </div>
   </section>
 
+  <section class="sec" id="giao-vien" aria-labelledby="h-teach" style="background:var(--soft)">
+    <div class="wrap">
+      <h2 id="h-teach"></h2>
+      <p class="intro" id="i-teach"></p>
+      <div class="tgrid" id="teach"></div>
+    </div>
+  </section>
+
   <section class="sec" id="huong-dan" aria-labelledby="h-guide">
     <div class="wrap">
       <h2 id="h-guide"></h2>
@@ -390,19 +491,19 @@ const SITES = [
       addr:"Bắc Gianh Ward, Quảng Trị Province (per news reports; to be verified).", rank:"Some sources list it as a special national monument; no decision number yet, to be verified."}},
  {id:2, slug:"hang-tam-co", region:"bac", themes:["tnxp","giao-thong"], status:"dang-bo-sung", y:125, x:84,
   vi:{name:"Hang Tám Cô", sum:"Hang đá ở km 16+500 trên Đường 20 Quyết Thắng. Ngày 14/11/1972, 13 cán bộ, chiến sĩ hy sinh trong hang, gồm 8 thanh niên xung phong và 5 pháo binh (theo báo Nhân Dân; các nguồn khác có thể ghi số liệu khác).",
-      addr:"Xã Thượng Trạch, tỉnh Quảng Trị (theo báo Nhân Dân).", rank:"Di tích quốc gia đặc biệt, Quyết định 2383/QĐ-TTg ngày 9/12/2013 (theo báo Nhân Dân; cần đối chiếu)."},
+      addr:"Xã Thượng Trạch, tỉnh Quảng Trị (theo báo Nhân Dân). Báo Sài Gòn Giải Phóng ghi xã Tân Trạch, huyện Bố Trạch (trước hợp nhất); cần đối chiếu.", rank:"Di tích quốc gia đặc biệt, Quyết định 2383/QĐ-TTg ngày 9/12/2013 (theo báo Nhân Dân; cần đối chiếu)."},
   en:{name:"Tám Cô Cave", sum:"A rock cave at km 16+500 on Route 20 “Quyết Thắng”. On 14 November 1972, 13 officers and soldiers died in the cave: 8 youth volunteers and 5 artillerymen (per Nhân Dân newspaper; other sources may give different figures).",
-      addr:"Thượng Trạch Commune, Quảng Trị Province (per Nhân Dân).", rank:"Special national monument, Decision 2383/QĐ-TTg of 9 Dec 2013 (per Nhân Dân; to be verified)."}},
+      addr:"Thượng Trạch Commune, Quảng Trị Province (per Nhân Dân). Sài Gòn Giải Phóng gives Tân Trạch Commune, Bố Trạch District (pre-merger); to be verified.", rank:"Special national monument, Decision 2383/QĐ-TTg of 9 Dec 2013 (per Nhân Dân; to be verified)."}},
  {id:3, slug:"pha-long-dai", region:"bac", themes:["tnxp","giao-thong"], status:"dang-bo-sung", y:200, x:196,
   vi:{name:"Phà Long Đại", sum:"Bến phà trên Đường 15, được gọi là “yết hầu” nối hậu phương miền Bắc với chiến trường miền Nam. Tháng 9/1972, 16 thanh niên xung phong Đại đội 130 hy sinh tại đây trong các trận bom (19/9: 15 người; 23/9: 1 người).",
       addr:"Xã Trường Ninh, tỉnh Quảng Trị (theo Báo Văn hóa).", rank:"Di tích lịch sử cấp quốc gia, quyết định của Bộ Văn hóa, Thể thao và Du lịch ngày 9/9/2025 (theo Báo Văn hóa; cần đối chiếu)."},
   en:{name:"Long Đại Ferry", sum:"A ferry crossing on Route 15, called the “throat” linking the northern rear with the southern battlefield. In September 1972, 16 youth volunteers of Company 130 died here in air raids (19 Sept: 15; 23 Sept: 1).",
       addr:"Trường Ninh Commune, Quảng Trị Province (per Báo Văn hóa).", rank:"National historical site, decision of the Ministry of Culture, Sports and Tourism dated 9 Sept 2025 (per Báo Văn hóa; to be verified)."}},
- {id:4, slug:"ben-pha-xuan-son", region:"bac", themes:["giao-thong"], status:"dang-bo-sung", y:160, x:150,
-  vi:{name:"Bến phà Xuân Sơn", sum:"Bến phà qua sông Son gần Phong Nha, nối các đường 12 và 15 với Đường 20 Quyết Thắng (mở năm 1965). Trước đó là bến đò dân sinh; trong kháng chiến chống Mỹ trở thành điểm vận chuyển chi viện, sau này mở thêm “bến phà B” (thông tin từ trang du lịch, cần đối chiếu nguồn chính thống).",
-      addr:"Xã Sơn Trạch, huyện Bố Trạch (trước hợp nhất); đơn vị hành chính hiện hành cần kiểm tra.", rank:"Chưa kiểm chứng: một số trang du lịch ghi di tích quốc gia (1986) và quốc gia đặc biệt (2013); cần đối chiếu quyết định."},
-  en:{name:"Xuân Sơn Ferry", sum:"A ferry over the Son River near Phong Nha, linking Routes 12 and 15 with Route 20 “Quyết Thắng” (opened 1965). It began as a local crossing and became a supply transport point during the war; a second crossing, “Ferry B”, was added later (travel-site information; to be checked against official sources).",
-      addr:"Sơn Trạch Commune, Bố Trạch District (before the merger); current administrative unit to be checked.", rank:"Unverified: some travel sites list national (1986) and special national (2013) status; decisions to be checked."}},
+ {id:4, slug:"hang-len-ha", region:"bac", themes:["thong-tin"], status:"dang-bo-sung", y:40, x:150,
+  vi:{name:"Hang Lèn Hà", sum:"Hang đá trên núi Lèn Hà, nơi đặt Trạm thông tin A69 (thành lập 7/1/1967), một trạm chuyển tiếp trên trục thông tin quân sự Bắc – Nam. Chiều 2/7/1972, máy bay Mỹ ném bom, 13 cán bộ, chiến sĩ hy sinh (10 nữ, 3 nam); chỉ sau khoảng một giờ, đường liên lạc đã thông suốt trở lại.",
+      addr:"Núi Lèn Hà, bản Hà, xã Thanh Hóa, huyện Tuyên Hóa, tỉnh Quảng Bình (cách ghi trước hợp nhất, theo báo Nhân Dân năm 2022). Nay thuộc tỉnh Quảng Trị; xã hiện hành cần đối chiếu.", rank:"Di tích lịch sử cấp quốc gia, Bộ Văn hóa, Thể thao và Du lịch xếp hạng ngày 7/5/2009 (theo báo chí; cần đối chiếu số quyết định)."},
+  en:{name:"Lèn Hà Cave", sum:"A rock cave on Lèn Hà mountain that housed Communications Station A69 (founded 7 January 1967), a relay on the North–South military signal axis. On the afternoon of 2 July 1972 US aircraft bombed it and 13 officers and soldiers died (10 women, 3 men); in about an hour the line was working again.",
+      addr:"Lèn Hà mountain, Hà hamlet, Thanh Hóa Commune, Tuyên Hóa District, Quảng Bình Province (pre-merger wording, per Nhân Dân 2022). Now part of Quảng Trị Province; current commune to be verified.", rank:"National historical site, ranked by the Ministry of Culture, Sports and Tourism on 7 May 2009 (per news reports; decision number to be verified)."}},
  {id:5, slug:"hien-luong-ben-hai", region:"nam", themes:["chia-cat"], status:"dang-bo-sung", y:262, x:208,
   vi:{name:"Đôi bờ Hiền Lương – Bến Hải", sum:"Sau Hiệp định Genève 1954, cầu Hiền Lương trên sông Bến Hải (vĩ tuyến 17) trở thành giới tuyến quân sự tạm thời chia cắt hai miền. Cầu do Pháp xây năm 1952, bị đánh sập năm 1967 và được xây lại sau khi đất nước thống nhất. Di tích gồm cầu, kỳ đài, nhà liên hợp và nhà đón tiếp.",
       addr:"Tỉnh Quảng Trị (hai bờ sông Bến Hải); xã/phường hiện hành cần kiểm tra.", rank:"Di tích quốc gia đặc biệt (năm xếp hạng cần đối chiếu)."},
@@ -430,13 +531,238 @@ const THEMES = {
  "tnxp":{vi:"Thanh niên xung phong", en:"Youth volunteers"},
  "doi-song":{vi:"Đời sống trong chiến tranh", en:"Life in wartime"},
  "chien-dau":{vi:"Chiến đấu", en:"Combat"},
- "chia-cat":{vi:"Chia cắt và thống nhất", en:"Division and reunification"}
+ "chia-cat":{vi:"Chia cắt và thống nhất", en:"Division and reunification"},
+ "thong-tin":{vi:"Thông tin liên lạc", en:"Communications"}
 };
 const REG = {bac:{vi:"Bắc Quảng Trị", en:"North Quảng Trị"}, nam:{vi:"Nam Quảng Trị", en:"South Quảng Trị"}};
 const VID = {
  "dang-bo-sung":{vi:"Đang bổ sung video", en:"Video coming soon"},
  "mau":{vi:"Video mẫu minh họa", en:"Sample video (illustration)"},
  "hoan-chinh":{vi:"Video hoàn chỉnh", en:"Completed video"}
+};
+/* ===== NỘI DUNG DÀI CHO TỪNG DI TÍCH: mục tiêu học tập, câu chuyện, hoạt động, nguồn =====
+   Mọi chi tiết lấy từ các bài báo ghi ở mục "Nguồn tham khảo" của từng di tích. Chỗ nào các nguồn ghi khác nhau thì có chú thích riêng.
+   Con số, tên người và địa danh vẫn cần nhóm dự án đối chiếu với tài liệu chính thức trước khi công bố rộng rãi. */
+const LONG = {
+ "ben-pha-gianh": {
+  obj: { vi: ["Giải thích vì sao bến phà Gianh được gọi là “yết hầu” của tuyến vận tải Trường Sơn – Hồ Chí Minh.",
+              "Kể được cách bộ đội, thanh niên xung phong và nhân dân giữ cho bến phà thông suốt dù bị đánh phá.",
+              "Nêu được những hạng mục chính của khu di tích sau tôn tạo."],
+         en: ["Explain why Gianh Ferry was called the “chokepoint” of the Trường Sơn – Hồ Chí Minh supply route.",
+              "Describe how soldiers, youth volunteers and local people kept the crossing open under attack.",
+              "Name the main features of the renovated memorial site."] },
+  story: { vi: [
+   ["Bối cảnh", "Bến phà Gianh nằm trên Quốc lộ 1A, ở km 625+500, nối hai bờ sông Gianh; nay thuộc phường Bắc Gianh, tỉnh Quảng Trị (theo Báo Văn hóa). Bài báo ghi bến được xây dựng lần đầu năm 1886 và khôi phục năm 1954. Trong kháng chiến chống Mỹ, đây là điểm chuyển hàng hóa, vũ khí và quân từ miền Bắc vào miền Nam, được ví là “yết hầu” của tuyến vận tải Trường Sơn – Hồ Chí Minh."],
+   ["Bị đánh phá liên tục", "Theo Báo Văn hóa, từ năm 1964 đến 1972, không quân và tàu chiến Mỹ đánh phá nơi đây hàng trăm trận, bằng bom lớn, bom bi và thủy lôi. Vì thế người ta gọi bến phà là “tọa độ lửa”: mỗi chuyến qua sông đều là một lần đối mặt với sự sống và cái chết. Từ đầu những năm 1960, bến được tổ chức thành hai điểm vượt chính; khi bị đánh, lực lượng mở thêm bến dự bị, phân tán đơn vị, vượt sông linh hoạt và sửa phà thật nhanh sau mỗi trận bom."],
+   ["Con người và con số", "Giữ cho bến phà thông suốt là công sức của bộ đội, thanh niên xung phong, dân công hỏa tuyến và nhân dân địa phương. Có người lao xuống nước để cứu xe và đồng đội. Theo bài báo, đến tháng 10/1972 có khoảng 1.000 tấn vũ khí qua hai điểm vượt Gianh và Long Đại; sang tháng 11, khoảng 5.000 tấn nữa. Nguyên tắc hành động được nhắc lại là: “Địch đánh, ta cứ đi”."],
+   ["Hôm nay", "Khu di tích sau tôn tạo rộng 2,8 ha, gồm đền tưởng niệm, nhà trưng bày, nhà đón tiếp và cảnh quan cây xanh. Các hạng mục phục dựng có cầu bán nguyệt, phà sắt và mô hình “con thuyền không số”: thuyền gỗ hai đáy dài 13,5 m, rộng 3,6 m, cao 2,3 m, nặng khoảng 20 tấn, gợi lại chuyến xuất phát từ Cảng Gianh năm 1960 của Tiểu đoàn 603. Công trình thi công hơn 60 ngày, hoàn toàn từ nguồn xã hội hóa, và được khánh thành ngày 19/4/2026. Bài báo ghi đây là di tích quốc gia đặc biệt nhưng không nêu năm công nhận."]],
+   en: [
+   ["Background", "Gianh Ferry lies on National Highway 1A at km 625+500, linking the two banks of the Gianh River; it now belongs to Bắc Gianh Ward, Quảng Trị Province (per Báo Văn hóa). The article says the landing was first built in 1886 and restored in 1954. During the war against the US it moved goods, weapons and troops from the North to the South and was called the “chokepoint” of the Trường Sơn – Hồ Chí Minh supply route."],
+   ["Under constant attack", "According to Báo Văn hóa, from 1964 to 1972 US aircraft and gunboats attacked the site in hundreds of raids, with large bombs, cluster bombs and naval mines. That is why it was called a “fire coordinate”: every crossing was a brush with life and death. From the early 1960s the landing was organised into two main crossing points; under attack, crews opened backup landings, dispersed units, crossed flexibly and repaired ferries fast after each raid."],
+   ["People and numbers", "Keeping the crossing open took soldiers, youth volunteers, frontline laborers and local residents. Some jumped into the water to save vehicles and comrades. By October 1972 about 1,000 tons of weapons had crossed at the Gianh and Long Đại points, and about 5,000 tons more in November (per the article). The guiding rule was: “The enemy attacks, we keep moving.”"],
+   ["Today", "The renovated site covers 2.8 ha, with a memorial temple, an exhibition house, a reception house and landscaping. Rebuilt features include a half-moon bridge, an iron ferry and a model of the “unmarked boat”: a double-hulled wooden vessel 13.5 m long, 3.6 m wide, 2.3 m high and about 20 tons, recalling the 1960 departure from Gianh Port of Battalion 603. It was built in just over 60 days entirely with social funding and inaugurated on 19 April 2026. The article calls it a special national monument but gives no year of designation."]] },
+  pull: { vi: "Địch đánh, ta cứ đi.", en: "The enemy attacks, we keep moving.", who: "Nguyên tắc hành động tại bến phà (theo Báo Văn hóa)", whoEn: "Guiding rule at the crossing (per Báo Văn hóa)" },
+  task: { vi: "Toán và Địa lí: 5.000 tấn hàng chuyển qua bến trong tháng 11/1972. Nếu mỗi xe tải chở 5 tấn thì cần bao nhiêu chuyến xe? (Đáp án: 1.000 chuyến.) Sau đó vẽ sơ đồ đường đi của hàng từ miền Bắc vào chiến trường và đánh dấu bến phà Gianh, phà Long Đại.",
+          en: "Maths and geography: 5,000 tons crossed in November 1972. If each truck carries 5 tons, how many truck trips is that? (Answer: 1,000.) Then sketch the route goods took from the North to the battlefield and mark Gianh and Long Đại ferries." },
+  src: [["Báo Văn hóa: Khánh thành di tích quốc gia đặc biệt Bến phà Gianh sau hơn 60 ngày thi công kỷ lục", "https://baovanhoa.vn/van-hoa/khanh-thanh-di-tich-quoc-gia-dac-biet-ben-pha-gianh-sau-hon-60-ngay-thi-cong-ky-luc-221223.html"],
+        ["Báo Văn hóa: Di tích Bến phà Gianh, biểu tượng của một thời không khuất phục", "https://baovanhoa.vn/du-lich/bieu-tuong-cua-mot-thoi-khong-khuat-phuc-220107.html"]]
+ },
+
+ "hang-tam-co": {
+  obj: { vi: ["Kể lại được sự việc xảy ra chiều 14/11/1972 tại hang Tám Cô.",
+              "Nêu được đơn vị, độ tuổi và quê hương của các thanh niên xung phong đã hy sinh (theo báo Pháp luật).",
+              "Giải thích vì sao hang đá này được xếp hạng di tích quốc gia đặc biệt."],
+         en: ["Retell what happened on the afternoon of 14 November 1972 at Tám Cô Cave.",
+              "Name the unit, ages and home district of the youth volunteers who died (per Báo Pháp luật).",
+              "Explain why this cave was ranked a special national monument."] },
+  story: { vi: [
+   ["Bối cảnh", "Hang Tám Cô là một hang đá ở khoảng km 16 trên Đường 20 – Quyết Thắng, thuộc xã Tân Trạch, huyện Bố Trạch (cách ghi trước hợp nhất; một số báo ghi xã Thượng Trạch, cần đối chiếu). Đường 20 – Quyết Thắng được Bộ Văn hóa, Thể thao và Du lịch xếp hạng di tích lịch sử quốc gia, còn riêng hang Tám Cô được Thủ tướng Chính phủ xếp hạng di tích quốc gia đặc biệt (theo báo Sài Gòn Giải Phóng; Báo Nhân Dân ghi Quyết định 2383/QĐ-TTg ngày 9/12/2013, cần đối chiếu)."],
+   ["Chiều 14/11/1972", "Theo Báo Pháp luật, chiều hôm đó máy bay B-52 ném bom khi một đội thanh niên xung phong đang sửa đường. Còi báo động vang lên, mọi người chạy vào hang trú ẩn. Một khối đá hàng ngàn tấn sập xuống, bịt kín cửa hang. Xe xích không thể xê dịch tảng đá; người ta không dùng thuốc nổ vì sợ sức nổ làm hại những người bên trong. Đồng đội chỉ có thể chuyển nước và cháo qua một đường ống nhỏ. Đến ngày thứ chín (23/11), người ta còn nghe một tiếng “Mẹ ơi” rất khẽ, rồi tất cả im lặng."],
+   ["Những con người", "Tám thanh niên xung phong thuộc Đội 25, Đại đội 217, Ban Xây dựng 67, Đoàn 559, gồm bốn nữ (Lê Thị Lương, Đỗ Thị Loan, Lê Thị Mai, Trần Thị Tơ) và bốn nam (Hoàng Văn Vụ, Nguyễn Văn Phương, Nguyễn Văn Huệ, Nguyễn Mậu Kỷ). Cả tám người đều quê ở huyện Hoằng Hóa, tỉnh Thanh Hóa. Anh Nguyễn Mậu Kỷ 38 tuổi, lớn nhất; những người còn lại khoảng 18–20 tuổi. Cũng trong buổi chiều ấy, năm chiến sĩ pháo binh hy sinh, tên được ghi trên bia ở hang (bài báo không nêu đơn vị và tên). Tổng cộng 13 người."],
+   ["Hôm nay", "Năm 1996, tỉnh Quảng Bình cho phá đá và đưa hài cốt các liệt sĩ ra ngoài; theo báo, các anh chị nằm sát bên nhau. Nay trước hang có đền tưởng niệm, nơi con cháu, đồng đội và nhiều người đến thắp hương, nhất là vào ngày 14/11 hằng năm. Lễ tưởng niệm 50 năm ngày hy sinh được tổ chức năm 2022."]],
+   en: [
+   ["Background", "Tám Cô Cave is a rock cave at about km 16 on Route 20 – Quyết Thắng, in Tân Trạch Commune, Bố Trạch District (pre-merger wording; some papers say Thượng Trạch Commune, to be verified). Route 20 – Quyết Thắng is ranked a national historical site by the Ministry of Culture, Sports and Tourism, while the cave itself was ranked a special national monument by the Prime Minister (per Sài Gòn Giải Phóng; Nhân Dân gives Decision 2383/QĐ-TTg of 9 Dec 2013, to be verified)."],
+   ["Afternoon of 14 November 1972", "According to Báo Pháp luật, that afternoon B-52s bombed while a youth volunteer team was repairing the road. Sirens sounded and everyone took shelter in the cave. A boulder weighing thousands of tons fell and sealed the entrance. Tracked vehicles could not move it, and explosives were rejected because the blast could harm those inside. Comrades could only pass water and porridge through a narrow pipe. On the ninth day (23 November) a faint “Mother!” was heard, then silence."],
+   ["The people", "Eight youth volunteers of Team 25, Company 217, Construction Board 67, Group 559: four women (Lê Thị Lương, Đỗ Thị Loan, Lê Thị Mai, Trần Thị Tơ) and four men (Hoàng Văn Vụ, Nguyễn Văn Phương, Nguyễn Văn Huệ, Nguyễn Mậu Kỷ). All came from Hoằng Hóa District, Thanh Hóa Province. Nguyễn Mậu Kỷ was 38, the eldest; the others were about 18–20. Five artillerymen also died that afternoon, with their names on the marker at the cave (the article gives no unit or names). In all, 13 people."],
+   ["Today", "In 1996 Quảng Bình Province had the rock broken and the remains brought out; the article says they lay close together. Today a memorial temple stands before the cave, where families, comrades and many visitors offer incense, especially every 14 November. A ceremony marking 50 years since their deaths was held in 2022."]] },
+  pull: { vi: "Mẹ ơi…", en: "Mother…", who: "Tiếng nói cuối cùng nghe được từ trong hang, ngày thứ chín (theo Báo Pháp luật)", whoEn: "The last voice heard from inside the cave, on the ninth day (per Báo Pháp luật)" },
+  task: { vi: "Địa lí: tìm huyện Hoằng Hóa (Thanh Hóa) và hang Tám Cô trên bản đồ Việt Nam, ước lượng khoảng cách giữa hai nơi. Ngữ văn: viết 5 câu về điều em nghĩ khi biết nhiều bạn trẻ rời quê ra mặt trận để giữ cho con đường thông suốt.",
+          en: "Geography: find Hoằng Hóa District (Thanh Hóa) and Tám Cô Cave on a map of Vietnam and estimate the distance between them. Literature: write 5 sentences about what you think on learning that many young people left home for the front to keep the road open." },
+  src: [["Báo Sài Gòn Giải Phóng: Quảng Bình long trọng tổ chức lễ tưởng niệm 50 năm ngày hy sinh các anh hùng liệt sĩ hang Tám Cô", "https://www.sggp.org.vn/quang-binh-long-trong-to-chuc-le-tuong-niem-50-nam-ngay-hy-sinh-cac-anh-hung-liet-si-hang-tam-co-post658706.html"],
+        ["Báo Pháp luật: Ghi ở nơi bất tử, hang Tám Cô, những số 8 lạ kỳ", "https://baophapluat.vn/ghi-o-noi-bat-tu-hang-tam-co-nhung-so-8-la-ky-post206454.html"]]
+ },
+
+ "pha-long-dai": {
+  obj: { vi: ["Nêu được vị trí và vai trò của bến phà Long Đại II trên Đường 15.",
+              "Kể được công việc của Đại đội 130 thanh niên xung phong và những gì xảy ra ngày 19/9/1972.",
+              "So sánh được bến phà Long Đại với bến phà Gianh."],
+         en: ["State the location and role of Long Đại II Ferry on Route 15.",
+              "Describe the work of Youth Volunteer Company 130 and what happened on 19 September 1972.",
+              "Compare Long Đại Ferry with Gianh Ferry."] },
+  story: { vi: [
+   ["Bối cảnh", "Tên đầy đủ của di tích là Bến phà Long Đại II, thuộc xã Trường Ninh, tỉnh Quảng Trị (theo Báo Văn hóa). Bến nằm trên Đường 15 chiến lược, được ví là “yết hầu”, huyết mạch nối hậu phương miền Bắc với chiến trường miền Nam. Từ năm 1965, khi Mỹ mở rộng chiến tranh phá hoại miền Bắc, nơi đây liên tục bị đánh phá. Đầu năm 1971, bến được tách thành Phà I (gần cầu) và Phà II (cách khoảng 500 m về phía hạ lưu)."],
+   ["Đại đội 130", "Đại đội 130 thanh niên xung phong có 150 người, tuổi mười tám, đôi mươi, trực tiếp quản lý Phà II và mở Đường 18. Sau mỗi đợt bom, các bạn cùng công binh và dân công hỏa tuyến san lấp hố bom, khôi phục bến để vũ khí, lương thực và hàng hóa tiếp tục được chuyển vào chiến trường."],
+   ["Tháng 9/1972", "Ngày 19/9/1972, máy bay Mỹ ném bom trúng Phà II. Trong khoảng một giờ, 15 thanh niên xung phong (7 nữ, 8 nam) hy sinh: 3 người khi đang chở hàng trên thuyền, 12 người tại bến và trong hầm trú ẩn. Ngày 23/9/1972, một trận bom khác làm chiến sĩ Trần Mạnh Hà hy sinh khi đang làm nhiệm vụ. Tổng cộng 16 người đã ngã xuống tại bến phà trong tháng 9/1972. Bài báo không nêu tuổi cụ thể và quê quán của các anh chị."],
+   ["Xếp hạng", "Ngày 9/9/2025, Bộ Văn hóa, Thể thao và Du lịch ra quyết định xếp hạng Bến phà Long Đại II là di tích lịch sử cấp quốc gia (theo Báo Văn hóa; cần đối chiếu số quyết định). Khi học, em cần dùng đúng tên chính thức “Long Đại II”, vì Phà I và Phà II là hai bến khác nhau."]],
+   en: [
+   ["Background", "The official name of the site is Long Đại II Ferry Landing, in Trường Ninh Commune, Quảng Trị Province (per Báo Văn hóa). It lies on the strategic Route 15, called the “chokepoint”, the lifeline linking the northern rear to the southern battlefield. From 1965, when the US widened its bombing of the North, it was attacked continually. In early 1971 the landing was split into Ferry I (near the bridge) and Ferry II (about 500 m downstream)."],
+   ["Company 130", "Youth Volunteer Company 130 had 150 members, aged about eighteen to twenty, and ran Ferry II directly and built Route 18. After every raid they worked with engineers and frontline laborers to fill bomb craters and restore the landing so weapons, food and goods could keep reaching the battlefield."],
+   ["September 1972", "On 19 September 1972, US aircraft bombed Ferry II directly. Within about an hour 15 youth volunteers (7 women, 8 men) died: 3 while carrying cargo by boat, 12 at the landing and in the shelter. On 23 September another raid killed soldier Trần Mạnh Hà on duty. In all, 16 people fell at the ferry in September 1972. The article does not give their individual ages or home towns."],
+   ["Designation", "On 9 September 2025 the Ministry of Culture, Sports and Tourism ranked Long Đại II Ferry Landing a national historical site (per Báo Văn hóa; decision number to be verified). Use the official name “Long Đại II”, because Ferry I and Ferry II were separate landings."]] },
+  pull: null,
+  task: { vi: "Lập bảng so sánh bến phà Gianh và bến phà Long Đại II theo ba tiêu chí: tuyến đường, lực lượng giữ bến, sự kiện nổi bật. Sau đó viết một câu giải thích vì sao đều gọi là “yết hầu”.",
+          en: "Make a table comparing Gianh Ferry and Long Đại II Ferry on three points: route, the force holding the crossing, notable events. Then write one sentence explaining why both were called a “chokepoint”." },
+  src: [["Báo Văn hóa: Bến phà Long Đại II, tọa độ lửa ghi dấu bản anh hùng ca", "https://baovanhoa.vn/van-hoa/ben-pha-long-dai-ii-toa-do-lua-ghi-dau-ban-anh-hung-ca-167579.html"]]
+ },
+
+ "hang-len-ha": {
+  obj: { vi: ["Giải thích vai trò của Trạm thông tin A69 trong trục thông tin quân sự Bắc – Nam.",
+              "Kể lại sự kiện chiều 2/7/1972 và việc đường liên lạc được nối lại chỉ sau khoảng một giờ.",
+              "Nêu được ý nghĩa của khẩu hiệu “Tim còn đập, mạch máu thông tin còn thông suốt”."],
+         en: ["Explain the role of Communications Station A69 on the North–South military signal axis.",
+              "Retell the events of the afternoon of 2 July 1972 and how the line was restored in about an hour.",
+              "Explain what the slogan “While the heart beats, the lifeblood of communications keeps flowing” means."] },
+  story: { vi: [
+   ["Bối cảnh", "Hang Lèn Hà nằm ở núi Lèn Hà, bản Hà, xã Thanh Hóa, huyện Tuyên Hóa, tỉnh Quảng Bình (cách ghi trước hợp nhất), cách đường Hồ Chí Minh khoảng 3 km. Trạm thông tin A69 được thành lập ngày 7/1/1967, thuộc Đại đội 9, Trung đoàn 134, nay là Lữ đoàn 134, Binh chủng Thông tin liên lạc. Đường lên khu đặt máy trên hang có 269 bậc thang; báo Thanh Niên ghi rằng con số này được chọn để trùng với tên Trạm A69."],
+   ["Trạm trung chuyển", "Trạm A69 là trạm trung gian chuyển tiếp trên trục thông tin quân sự Bắc – Nam. Trạm bảo đảm liên lạc cho nhiều đơn vị, trong đó có Cụm kho Binh trạm 25 (Đoàn 559), Binh trạm 12 ở Cổng Trời, Sư đoàn Phòng không 367, Viện 4 (Quân khu 4), Đồn biên phòng Cha Lo và căn cứ hải quân ở Ba Đồn, chính là địa phương của trường chúng ta. Trạm cũng là kho dự trữ trang bị của Bộ Tư lệnh Thông tin liên lạc, và phục vụ các chiến dịch như Đường 9 – Nam Lào, Cánh đồng Chum 1971 và Quảng Trị 1972."],
+   ["Chiều 2/7/1972", "Theo Báo Nhân Dân, một máy bay Mỹ bắn pháo khói vào nhà ăn của trạm để chỉ điểm. Chưa đầy năm phút sau, hai máy bay khác ném ba quả bom vào hai đầu núi và giữa hội trường, rồi ném bom phát quang và bom cháy. Trạm máy trên hang hư hỏng nặng, khoảng 1.500 m đường dây bị đứt. Mười ba cán bộ, chiến sĩ hy sinh, trong đó có 10 nữ và 3 nam. Các chiến sĩ còn sống khôi phục đường dây, nối lại máy, và chỉ sau khoảng một giờ liên lạc Bắc – Nam đã thông suốt. Khẩu hiệu của đơn vị lúc đó: “Tim còn đập, mạch máu thông tin còn thông suốt”."],
+   ["Ghi nhớ", "Mười ba liệt sĩ là: Hoàng Thị Liên, Nguyễn Thị Anh, Ngô Thị Luận, Chu Thị Mạnh, Lê Thị Châm, Trần Thị Loan, Nguyễn Thị Thảo, Vũ Thị Lan, Bùi Thị Lung, Cao Thị Xuyến, Đàm Văn Trình (Trạm trưởng), Lương Văn Chấn và Trần Văn Xây (theo Báo Nhân Dân). Trạm được tặng hai Huân chương Chiến công hạng Nhì và danh hiệu Anh hùng lực lượng vũ trang nhân dân (bài báo không nêu năm phong tặng). Ngày 7/5/2009, Bộ Văn hóa, Thể thao và Du lịch xếp hạng hang là di tích lịch sử cấp quốc gia. Lễ tưởng niệm 50 năm ngày hy sinh được tổ chức ngày 2/7/2022 tại khu di tích."]],
+   en: [
+   ["Background", "Lèn Hà Cave lies on Lèn Hà mountain, Hà hamlet, Thanh Hóa Commune, Tuyên Hóa District, Quảng Bình Province (pre-merger wording), about 3 km from the Hồ Chí Minh road. Communications Station A69 was founded on 7 January 1967 under Company 9, Regiment 134, now Brigade 134 of the Signal Corps. The path up to the equipment room in the cave has 269 steps; Thanh Niên newspaper says the number was chosen to echo the name A69."],
+   ["A relay station", "Station A69 was an intermediate relay on the North–South military signal axis. It kept lines open for many units, including Supply Station Cluster 25 (Group 559), Supply Station 12 at Cổng Trời, the 367th Air Defence Division, Hospital 4 (Military Region 4), Cha Lo border post and the naval base at Ba Đồn, our own school’s area. It was also a reserve depot for the Signal Command and served campaigns such as Route 9 – Southern Laos, the 1971 Plain of Jars and Quảng Trị 1972."],
+   ["Afternoon of 2 July 1972", "According to Nhân Dân, a US aircraft fired a smoke shell at the station’s mess to mark it. Less than five minutes later two more aircraft dropped three bombs on both mountain ends and the middle of the meeting hall, followed by clearing bombs and incendiaries. The equipment room in the cave was badly damaged and about 1,500 m of line was cut. Thirteen officers and soldiers died: 10 women and 3 men. The survivors repaired the line, reconnected the sets, and in about an hour North–South communication flowed again. The unit’s slogan then: “While the heart beats, the lifeblood of communications keeps flowing.”"],
+   ["Remembering", "The thirteen martyrs are: Hoàng Thị Liên, Nguyễn Thị Anh, Ngô Thị Luận, Chu Thị Mạnh, Lê Thị Châm, Trần Thị Loan, Nguyễn Thị Thảo, Vũ Thị Lan, Bùi Thị Lung, Cao Thị Xuyến, Đàm Văn Trình (station chief), Lương Văn Chấn and Trần Văn Xây (per Nhân Dân). The station received two Second-Class Feat Medals and the title Hero of the People’s Armed Forces (year not given in the article). On 7 May 2009 the Ministry of Culture, Sports and Tourism ranked the cave a national historical site. A ceremony for the 50th anniversary was held on 2 July 2022 at the site."]] },
+  pull: { vi: "Tim còn đập, mạch máu thông tin còn thông suốt.", en: "While the heart beats, the lifeblood of communications keeps flowing.", who: "Khẩu hiệu của Trạm A69 (theo Báo Nhân Dân)", whoEn: "Slogan of Station A69 (per Nhân Dân)" },
+  task: { vi: "Hãy tưởng tượng chiến trường bị mất liên lạc một giờ: điều gì có thể xảy ra với các đơn vị đang chờ lệnh? Từ đó giải thích vì sao các chiến sĩ coi “dây máy là vũ khí”. Em cũng có thể tìm thêm: ở trường ta hôm nay, những phương tiện nào đang giữ vai trò “mạch máu thông tin”?",
+          en: "Imagine the battlefield losing contact for an hour: what could happen to units waiting for orders? Use it to explain why the soldiers treated “the line as a weapon”. You can also look into it: at school today, what carries the role of “lifeblood of communication”?" },
+  src: [["Báo Nhân Dân: Khúc tráng ca hang Lèn Hà", "https://nhandan.vn/khuc-trang-ca-hang-len-ha-post266378.html"],
+        ["Báo Nhân Dân: Tưởng niệm 50 năm ngày hy sinh của 13 cán bộ, chiến sĩ Trạm thông tin A69", "https://nhandan.vn/ocop/tuong-niem-50-nam-ngay-hy-sinh-cua-13-can-bo-chien-si-tram-thong-tin-a69-post703630.html"],
+        ["Báo Thanh Niên: Lèn Hà, nơi thông tin như dòng máu đỏ", "https://thanhnien.vn/len-ha-noi-thong-tin-nhu-dong-mau-do-185230802075356736.htm"],
+        ["Môi trường và Đô thị: Hang Lèn Hà (Quảng Bình), di tích lịch sử ghi dấu chiến công của người lính thông tin", "https://moitruong.net.vn/hang-len-ha-quang-binh-di-tich-lich-su-ghi-dau-chien-cong-cua-nguoi-linh-thong-tin-63585.html"],
+        ["Báo Tuổi Trẻ: Xây dựng di tích hang Lèn Hà thành điểm du lịch", "https://tuoitre.vn/du-lich/xay-dung-di-tich-hang-len-ha-thanh-diem-du-lich-1309839.htm"]]
+ },
+
+ "hien-luong-ben-hai": {
+  obj: { vi: ["Giải thích vì sao sông Bến Hải ở vĩ tuyến 17 trở thành giới tuyến quân sự tạm thời năm 1954.",
+              "Kể được “cuộc chiến cột cờ và loa phóng thanh” ở hai đầu cầu.",
+              "Nêu được các mốc: cầu mở năm 1952, bị đánh sập năm 1967, được xây lại sau đó."],
+         en: ["Explain why the Bến Hải River at the 17th parallel became the temporary military demarcation line in 1954.",
+              "Describe the “contest of flagpoles and loudspeakers” at the two ends of the bridge.",
+              "Give the key dates: opened 1952, destroyed 1967, rebuilt afterwards."] },
+  story: { vi: [
+   ["Bối cảnh", "Sau Hiệp định Genève năm 1954, sông Bến Hải, ở vĩ tuyến 17, trở thành giới tuyến quân sự tạm thời chia hai miền. Cầu Hiền Lương bắc qua sông ở huyện Vĩnh Linh, được đưa vào sử dụng năm 1952, khi đó là cây cầu bê tông và gỗ do người Pháp xây. Từ 1954 đến 1975, cầu bị đường ranh giới chia đôi: một nửa bên Bắc, một nửa bên Nam (theo Wikipedia tiếng Anh; cần đối chiếu)."],
+   ["Cuộc đọ sức ở hai đầu cầu", "Hai bên thi nhau dựng cột cờ cao và đặt loa công suất lớn để phát đi tiếng nói của mình càng xa càng tốt. Cột cờ bên Bắc cao 38,6 m, nhiều lần bị máy bay và pháo hạm đánh trong những năm 1965–1968; mỗi lần cờ bị hạ, người ta lại dựng cờ mới. Máy khâu được đưa ra tuyến đầu, thợ may địa phương giúp may cờ; hai nữ thợ may Trần Thị Viễn và Ngô Thị Diễm được phong Anh hùng lực lượng vũ trang nhân dân."],
+   ["Cầu bị phá và được dựng lại", "Năm 1967, bom Mỹ phá hủy hoàn toàn cả cầu lẫn cột cờ. Trước tiên người ta dùng cầu phao tạm. Năm 1974, một cây cầu mới được xây cạnh cầu cũ để phục vụ hậu cần cho cuộc tiến công mùa Xuân 1975. Cầu được xây lại theo tiêu chuẩn hiện đại năm 1996; năm 2003 vị trí cầu cũ được phục dựng thành cầu đi bộ theo mẫu cầu năm 1952; năm 2005 một cột cờ lớn được dựng ở bờ Bắc; năm 2014 nửa cầu phía Bắc sơn xanh, nửa phía Nam sơn vàng để gợi lại cảnh cầu bị chia đôi (theo Wikipedia tiếng Anh; cần đối chiếu)."],
+   ["Hôm nay", "Khu di tích Đôi bờ Hiền Lương – Bến Hải gồm cầu, kỳ đài, nhà liên hợp và nhà đón tiếp. Đây là nơi học sinh có thể hiểu vì sao một dòng sông nhỏ lại từng là biểu tượng của nỗi đau chia cắt và khát vọng thống nhất. Năm xếp hạng di tích quốc gia đặc biệt còn cần đối chiếu."]],
+   en: [
+   ["Background", "After the 1954 Geneva Accords the Bến Hải River, at the 17th parallel, became the temporary military demarcation line dividing the two zones. The Hiền Lương Bridge crosses it in Vĩnh Linh District; it opened in 1952 as a concrete-and-wood bridge built by the French. From 1954 to 1975 the border line cut the bridge in two: a northern half and a southern half (per English Wikipedia; to be verified)."],
+   ["A contest at both ends", "Both sides vied to raise taller flagpoles and set up high-powered loudspeakers to carry their messages as far as possible. The northern flagpole reached 38.6 m and was repeatedly hit by aircraft and naval guns in 1965–1968; each time the flag came down, a new one went up. Sewing machines were sent to the front and local tailors helped; two women tailors, Trần Thị Viễn and Ngô Thị Diễm, were named Heroes of the People’s Armed Forces."],
+   ["Destroyed and rebuilt", "In 1967 US bombs destroyed both the bridge and the flagpole. Temporary pontoon bridges came first. In 1974 a new bridge was built beside the old one to support logistics for the 1975 spring offensive. The bridge was rebuilt to modern standards in 1996; in 2003 the original site was rebuilt as a pedestrian bridge modelled on the 1952 one; in 2005 a monumental flagpole was raised on the north bank; in 2014 the northern half was painted blue and the southern half yellow to recall the divided bridge (per English Wikipedia; to be verified)."],
+   ["Today", "The Hiền Lương – Bến Hải memorial site includes the bridge, a flag tower, a joint house and a reception house. It lets students see why a small river became a symbol of the pain of division and the wish for reunification. The year of its special national monument ranking still needs checking."]] },
+  pull: null,
+  task: { vi: "Vì sao hai bên thi nhau dựng cột cờ cao và đặt loa lớn? Viết ba câu trả lời của em, rồi trao đổi với bạn bên cạnh xem hai bạn có cùng ý không. Gợi ý thêm: tìm vĩ tuyến 17 trên quả địa cầu hoặc bản đồ và nêu vĩ tuyến này đi qua những tỉnh nào của Việt Nam.",
+          en: "Why did both sides compete to raise tall flagpoles and big loudspeakers? Write three sentences of your own, then compare with a classmate. Extra: find the 17th parallel on a globe or map and name the provinces of Vietnam it crosses." },
+  src: [["Wikipedia: Hiền Lương Bridge (tiếng Anh)", "https://en.wikipedia.org/wiki/Hi%E1%BB%81n_L%C6%B0%C6%A1ng_Bridge"]]
+ },
+
+ "dia-dao-vinh-moc": {
+  obj: { vi: ["Mô tả được cấu trúc ba tầng của địa đạo Vịnh Mốc và các công trình bên trong.",
+              "Giải thích vì sao người dân Vĩnh Linh phải đào địa đạo để sống và chiến đấu.",
+              "Nêu được vai trò của các cửa hầm hướng ra biển đối với đảo Cồn Cỏ."],
+         en: ["Describe the three-level structure of the Vịnh Mốc tunnels and the rooms inside.",
+              "Explain why the people of Vĩnh Linh had to dig tunnels to live and fight.",
+              "State the role of the sea-facing entrances for Cồn Cỏ Island."] },
+  story: { vi: [
+   ["Bối cảnh", "Địa đạo Vịnh Mốc là một làng hầm dưới lòng đất ở vùng Vĩnh Linh, sát giới tuyến quân sự tạm thời. Người dân bắt đầu đào từ năm 1965, khi chiến tranh phá hoại của Mỹ diễn ra ác liệt, để có nơi trú ẩn và sinh sống giữa bom đạn. Theo Vietnam+, công việc kéo dài gần 20 tháng, hơn 18.000 ngày công, đào và chuyển hơn 6.000 m³ đất đá bằng cuốc và xẻng."],
+   ["Một làng dưới đất", "Địa đạo có ba tầng; tầng sâu nhất cách mặt đất 21–23 m, lòng hầm cao khoảng 1,7–1,8 m. Có 13 cửa, trong đó 6 cửa thông lên đồi và 7 cửa hướng ra biển. Mỗi phòng nhỏ dành cho 2–4 người. Bên trong có hội trường chứa 50–60 người, giếng nước, nhà hộ sinh, trạm phẫu thuật, trạm xá và bếp Hoàng Cầm (bếp nấu ít khói)."],
+   ["Sống và tiếp tế", "Các nguồn ghi chiều dài khác nhau: Vietnam+ ghi hơn 1.000 m chưa kể các ngách; nhiều tài liệu khác ghi tổng chiều dài khoảng 2.000 m. Số người sống trong hầm cũng được ghi khác nhau, từ “hàng trăm người” đến khoảng 60 gia đình; điều chắc chắn là có 17 em bé chào đời ngay trong địa đạo. Các cửa hầm hướng ra biển còn là nơi xuất phát của những chuyến vận chuyển, tiếp tế cho đảo Cồn Cỏ."],
+   ["Xếp hạng", "Địa đạo Vịnh Mốc được Thủ tướng Chính phủ xếp hạng di tích quốc gia đặc biệt theo Quyết định số 2408/QĐ-TTg ngày 31/12/2014 (theo Vietnam+). Em hãy lưu ý rằng khi các nguồn ghi khác nhau về một con số, ta nên nêu cả hai và ghi rõ nguồn, đó cũng là cách làm việc của người nghiên cứu lịch sử."]],
+   en: [
+   ["Background", "The Vịnh Mốc tunnels are an underground village in Vĩnh Linh, right beside the temporary military demarcation line. People began digging in 1965, when the US bombing of the North was fierce, to have shelter and a place to live amid the bombs. According to Vietnam+, the work took nearly 20 months and over 18,000 work-days, digging and hauling more than 6,000 m³ of earth and rock with picks and shovels."],
+   ["A village underground", "The tunnels have three levels; the deepest lies 21–23 m below ground, and the passages are about 1.7–1.8 m high. There are 13 entrances: 6 lead up to the hill and 7 face the sea. Each small room held 2–4 people. Inside were a hall for 50–60 people, a well, a maternity room, a surgery station, a clinic and a Hoàng Cầm stove (a low-smoke kitchen)."],
+   ["Living and supplying", "Sources give different lengths: Vietnam+ says over 1,000 m not counting side branches; many other references give a total of about 2,000 m. The number of residents is also reported differently, from “hundreds of people” to about 60 families; what is certain is that 17 babies were born inside. The sea-facing entrances were also the starting points for supply runs to Cồn Cỏ Island."],
+   ["Designation", "The Prime Minister ranked the Vịnh Mốc tunnels a special national monument under Decision 2408/QĐ-TTg of 31 December 2014 (per Vietnam+). Note that when sources disagree on a number, we state both and name each source; this is also how historians work."]] },
+  pull: null,
+  task: { vi: "Vẽ mặt cắt ba tầng của địa đạo, ghi độ sâu và đặt tên các phòng. Em sẽ đặt giếng nước, hội trường và nhà hộ sinh ở tầng nào, vì sao? Cuối cùng, ghi lại hai con số về chiều dài địa đạo từ hai nguồn khác nhau và nêu cách em sẽ kiểm tra.",
+          en: "Draw a cross-section of the three levels with depths and room names. Which level would you put the well, the hall and the maternity room on, and why? Finally, note the two length figures from different sources and say how you would check them." },
+  src: [["Vietnam+: Địa đạo Vịnh Mốc, lưu giữ ký ức chiến tranh, trao truyền khát vọng hòa bình", "https://www.vietnamplus.vn/dia-dao-vinh-moc-luu-giu-ky-uc-chien-tranh-trao-truyen-khat-vong-hoa-binh-post1133040.amp"]]
+ },
+
+ "thanh-co-quang-tri": {
+  obj: { vi: ["Nêu thời gian và quy mô của trận chiến 81 ngày đêm năm 1972.",
+              "Giải thích vai trò của sông Thạch Hãn trong việc tiếp viện cho Thành cổ.",
+              "Trình bày được ý nghĩa của trận chiến đối với đàm phán và Hiệp định Paris."],
+         en: ["State the dates and scale of the 81-day-and-night battle of 1972.",
+              "Explain the role of the Thạch Hãn River in reinforcing the Citadel.",
+              "Describe the battle’s significance for the negotiations and the Paris Agreement."] },
+  story: { vi: [
+   ["Bối cảnh", "Từ ngày 28/6 đến ngày 16/9/1972, trong 81 ngày đêm, quân giải phóng chiến đấu giành lại thị xã Quảng Trị và Thành cổ. Theo Báo Văn hóa, khu vực Thành cổ phải hứng chịu khoảng 328.000 tấn bom đạn; trung bình mỗi chiến sĩ chịu khoảng 100 quả bom và 200 quả đạn pháo."],
+   ["Bên dòng Thạch Hãn", "Mỗi ngày có một đại đội vượt sông Thạch Hãn để tiếp viện cho Thành cổ. Có đơn vị vừa vào trận đêm trước, sáng hôm sau chỉ còn vài người sống sót. Cách đánh vượt khỏi quy ước thông thường: không chỉ bộ binh và công binh, mà cả lực lượng thông tin, quân y cũng cầm súng chiến đấu."],
+   ["Ý nghĩa", "Theo bài báo, trận đánh góp phần làm thay đổi cục diện chiến tranh cùng với chiến thắng “Điện Biên Phủ trên không”, buộc Mỹ phải nối lại đàm phán, đi đến Hiệp định Paris, đồng thời tạo tiền đề cho Đại thắng mùa Xuân 1975. Bài báo không nêu số liệt sĩ hay quân số hai bên, nên em đừng tự điền con số khi chưa có nguồn."],
+   ["Hôm nay", "Dấu tích trận đánh nay không còn nhiều, nhưng Thành cổ vẫn là biểu tượng của chủ nghĩa anh hùng cách mạng đối với người dân Quảng Trị. Nơi đây có đài tưởng niệm và bến thả hoa bên sông Thạch Hãn. Từ năm 2022, Thành cổ và bến thả hoa mở cửa đón khách vào buổi tối. Quyết định xếp hạng di tích quốc gia đặc biệt cần được đối chiếu thêm."]],
+   en: [
+   ["Background", "From 28 June to 16 September 1972, for 81 days and nights, Liberation forces fought to retake Quảng Trị town and the Citadel. According to Báo Văn hóa, the Citadel area took about 328,000 tons of bombs and shells; on average each soldier faced about 100 bombs and 200 artillery shells."],
+   ["By the Thạch Hãn", "Every day one company crossed the Thạch Hãn River to reinforce the Citadel. Some units entered the fight one night and by the next morning only a few survived. The fighting broke the usual rules: not only infantry and engineers but also signal and medical units took up arms."],
+   ["Meaning", "According to the article, the battle helped change the course of the war together with the “Dien Bien Phu in the air” victory, forcing the US back to negotiations and the Paris Agreement, and setting the stage for the Spring 1975 victory. The article gives no figure for martyrs or troop strength, so do not fill in numbers without a source."],
+   ["Today", "Few traces of the battle remain, but the Citadel is still a symbol of revolutionary heroism for the people of Quảng Trị. There is a memorial and a flower-offering wharf on the Thạch Hãn River. Since 2022 the Citadel and the wharf have opened to visitors in the evening. The decision ranking it a special national monument needs further checking."]] },
+  pull: null,
+  task: { vi: "Toán: 328.000 tấn bom đạn. Nếu mỗi xe tải chở 10 tấn thì cần bao nhiêu xe? (Đáp án: 32.800 xe.) Nếu các xe xếp hàng, mỗi xe dài 8 m, hàng xe dài khoảng bao nhiêu ki-lô-mét? (Khoảng 262 km.) Em có suy nghĩ gì về con số này?",
+          en: "Maths: 328,000 tons of bombs and shells. If each truck carries 10 tons, how many trucks is that? (Answer: 32,800.) If the trucks lined up, each 8 m long, how many kilometres would the line stretch? (About 262 km.) What do you think about this number?" },
+  src: [["Báo Văn hóa: Cuộc chiến đấu 81 ngày đêm bảo vệ Thành cổ Quảng Trị như một huyền thoại", "https://baovanhoa.vn/doi-song-van-hoa/cuoc-chien-dau-81-ngay-dem-bao-ve-thanh-co-quang-tri-nhu-mot-huyen-thoai-71538.html"]]
+ },
+
+ "san-bay-ta-con-khe-sanh": {
+  obj: { vi: ["Nêu được vị trí, quy mô và vai trò của cụm cứ điểm Khe Sanh giai đoạn 1966–1968.",
+              "Kể lại mốc ngày 9/7/1968 trong Chiến dịch Đường 9 – Khe Sanh.",
+              "Biết cách đặt câu hỏi khi quan sát hiện vật trưng bày ở di tích."],
+         en: ["State the location, size and role of the Khe Sanh base complex in 1966–1968.",
+              "Retell the milestone of 9 July 1968 in the Route 9 – Khe Sanh Campaign.",
+              "Learn to ask questions when observing exhibits at a historic site."] },
+  story: { vi: [
+   ["Bối cảnh", "Sân bay Tà Cơn nằm trên tuyến đường Hồ Chí Minh nhánh Tây, thuộc xã Khe Sanh, tỉnh Quảng Trị. Đây từng là một phần của cụm cứ điểm quân sự chiến lược của Mỹ trong giai đoạn 1966–1968. Theo báo Nhân Dân, cụm cứ điểm có quy mô khoảng 2 km x 1 km, gồm nhiều tiểu cứ điểm, công sự kiên cố và một sân bay cỡ lớn."],
+   ["Vì sao quan trọng", "Quân Mỹ dùng sân bay làm bàn đạp cho các cuộc hành quân trên không, đồng thời triển khai máy bay trinh sát và chỉ điểm để đánh phá, nhằm ngăn chặn và cắt đứt tuyến đường Hồ Chí Minh. Vì thế việc làm chủ khu vực này có ý nghĩa lớn đối với con đường chi viện của ta."],
+   ["Mốc 9/7/1968", "Sau bốn đợt tiến công giải phóng Khe Sanh, quân giải phóng làm chủ cứ điểm sân bay Tà Cơn ngày 9/7/1968, kết thúc Chiến dịch Đường 9 – Khe Sanh (theo Báo Nhân Dân). Diễn biến Khe Sanh được các nguồn Việt Nam và nước ngoài mô tả không hoàn toàn giống nhau; khi học, em nên đọc nhiều nguồn và ghi rõ mỗi ý lấy từ đâu."],
+   ["Hôm nay", "Di tích được xếp hạng di tích quốc gia năm 1986. Khu di tích trưng bày nhiều máy bay như C-130, C-119, UH-1, CH-47 và xe tăng, còn khá nguyên vẹn; Nhà bảo tàng Đường 9 – Khe Sanh có hàng trăm hiện vật. Đầu năm 2026, chiếc C-119 được chuyển từ sân bay Biên Hòa (Đồng Nai) về trưng bày tại đây."]],
+   en: [
+   ["Background", "Tà Cơn Airfield lies on the western branch of the Hồ Chí Minh road in Khe Sanh Commune, Quảng Trị Province. It was part of the US strategic base complex of 1966–1968. According to Nhân Dân, the complex measured about 2 km by 1 km, with many sub-bases, strong fortifications and a large airfield."],
+   ["Why it mattered", "US forces used the airfield as a springboard for air operations and deployed reconnaissance and spotter aircraft to guide attacks aimed at blocking and cutting the Hồ Chí Minh route. Controlling the area therefore mattered a great deal for our supply route."],
+   ["The 9 July 1968 milestone", "After four assaults to liberate Khe Sanh, Liberation forces took the Tà Cơn airfield base on 9 July 1968, ending the Route 9 – Khe Sanh Campaign (per Nhân Dân). Vietnamese and foreign sources describe Khe Sanh somewhat differently; when studying it, read several sources and note where each idea comes from."],
+   ["Today", "The site was ranked a national monument in 1986. It displays aircraft such as the C-130, C-119, UH-1 and CH-47, and tanks, in fairly good condition; the Route 9 – Khe Sanh Museum holds hundreds of artefacts. In early 2026 a C-119 was moved here from Biên Hòa airfield (Đồng Nai)."]] },
+  pull: null,
+  task: { vi: "Khi đến thăm hoặc xem ảnh hiện vật, hãy chọn một máy bay hoặc xe và đặt ba câu hỏi: Nó dùng để làm gì? Ai đã dùng nó? Vì sao nó được đặt ở đây? Sau đó tìm câu trả lời trong hai nguồn khác nhau và so sánh.",
+          en: "When you visit or look at photos of the exhibits, pick one aircraft or vehicle and ask three questions: What was it used for? Who used it? Why is it placed here? Then look for answers in two different sources and compare." },
+  src: [["Báo Nhân Dân: Thăm di tích sân bay Tà Cơn", "https://nhandan.vn/tham-di-tich-san-bay-ta-con-post947325.html"]]
+ }
+};
+/* ===== Gợi ý cho giáo viên: là đề xuất của nhóm dự án, chưa đối chiếu với kế hoạch giáo dục của nhà trường ===== */
+const TEACH = {
+ lesson: { h: ["Một tiết 45 phút với một di tích", "A 45-minute lesson on one site"],
+  steps: [
+   ["5 phút", "Khởi động: cho xem video hoặc ảnh, hỏi “Em nhìn thấy gì? Em thắc mắc điều gì?”.", "Warm-up: show the video or photo and ask “What do you see? What do you wonder?”."],
+   ["12 phút", "Đọc theo cặp phần “Câu chuyện của di tích”, gạch chân con số và tên riêng.", "Read “The story of the site” in pairs, underlining numbers and proper names."],
+   ["12 phút", "Thảo luận hai câu hỏi suy ngẫm; mỗi nhóm trình bày một ý.", "Discuss the two reflection questions; each group shares one idea."],
+   ["10 phút", "Làm “Hoạt động cho em” (toán, bản đồ, viết hoặc so sánh).", "Do the “Activity for you” (maths, map, writing or comparison)."],
+   ["6 phút", "Củng cố bằng mục Câu đố, hoặc in phiếu học tập để làm ở nhà.", "Wrap up with the Quiz, or print the worksheet to do at home."]] },
+ proj: { h: ["Dự án nhóm: so sánh hai di tích", "Group project: compare two sites"],
+  p: ["Mỗi nhóm chọn một cặp, lập bảng so sánh (thời gian, lực lượng, sự kiện, ý nghĩa), rồi trình bày 2–3 phút. Các cặp gợi ý:", "Each group picks a pair, makes a comparison table (time, people, events, meaning), then presents for 2–3 minutes. Suggested pairs:"],
+  pairs: [["Hang Tám Cô và Hang Lèn Hà: cùng năm 1972, cùng 13 người hy sinh, một bên giữ đường bộ, một bên giữ đường dây thông tin.", "Tám Cô Cave and Lèn Hà Cave: the same year, 13 lives lost each, one keeping a road open and one a signal line."],
+          ["Bến phà Gianh và Phà Long Đại: hai bến phà trên hai tuyến đường chi viện.", "Gianh Ferry and Long Đại Ferry: two crossings on two supply routes."],
+          ["Hiền Lương – Bến Hải và Địa đạo Vịnh Mốc: cùng ở Vĩnh Linh, một bên là ranh giới, một bên là đời sống dưới lòng đất.", "Hiền Lương – Bến Hải and Vịnh Mốc Tunnels: both in Vĩnh Linh, one a boundary and one life underground."],
+          ["Thành cổ Quảng Trị và Sân bay Tà Cơn – Khe Sanh: hai chiến trường, hai năm 1972 và 1968.", "Quảng Trị Citadel and Tà Cơn – Khe Sanh: two battlefields, 1972 and 1968."]] },
+ cross: { h: ["Gợi ý liên môn", "Cross-curricular ideas"],
+  items: [
+   [["Lịch sử", "History"], ["Dựng dòng thời gian của cả lớp; phân biệt nguồn báo chí với tài liệu chính thức.", "Build a class timeline; tell news sources from official documents."]],
+   [["Địa lí", "Geography"], ["Đánh dấu 8 di tích trên bản đồ; tìm vĩ tuyến 17 và các tuyến Đường 1A, 15, 20.", "Mark the 8 sites on a map; find the 17th parallel and Routes 1A, 15, 20."]],
+   [["Toán", "Maths"], ["Quy đổi tấn bom đạn ra số xe tải; tính độ dài hàng xe; so sánh số liệu giữa các nguồn.", "Convert tons of munitions to truck loads; compute the length of a truck line; compare figures between sources."]],
+   [["Ngữ văn", "Literature"], ["Viết thư hoặc nhật ký tưởng tượng từ một thanh niên xung phong; viết thuyết minh cho video.", "Write an imagined letter or diary of a youth volunteer; write narration for a video."]],
+   [["Tin học", "ICT"], ["Quay và dựng video 2–3 phút có phụ đề Việt – Anh, rồi thêm vào trang bằng công cụ them-video.html.", "Shoot and edit a 2–3 minute video with Vietnamese–English subtitles, then add it to the site with them-video.html."]],
+   [["Giáo dục công dân", "Civic education"], ["Thảo luận trách nhiệm của người trẻ hôm nay trong việc gìn giữ di sản và hòa bình.", "Discuss young people’s role today in protecting heritage and peace."]]] },
+ rule: { h: ["Nguyên tắc làm việc với nguồn và với học sinh", "Working rules for sources and for students"],
+  items: [
+   ["Mỗi thông tin phải có nguồn. Nơi các nguồn ghi khác nhau (ví dụ chiều dài địa đạo Vịnh Mốc), hãy ghi cả hai và nêu nguồn.", "Every fact needs a source. Where sources differ (for example the length of the Vịnh Mốc tunnels), give both and name them."],
+   ["Địa chỉ hiện hành, tên chính thức và quyết định xếp hạng cần đối chiếu với văn bản của cơ quan có thẩm quyền trước khi công bố.", "Current addresses, official names and ranking decisions must be checked against documents from the competent authority before publication."],
+   ["Không đưa họ tên, ảnh hoặc thông tin cá nhân của học sinh lên trang. Khi quay video ở di tích, xin phép ban quản lý và người được ghi hình.", "Do not put students’ names, photos or personal data on the site. When filming at a site, ask permission from the management and from the people filmed."],
+   ["Với các nội dung về hy sinh, mất mát, hãy chuẩn bị lời dẫn trang trọng và cho học sinh thời gian lắng lại; không dùng hiệu ứng ồn ào hay giải trí hóa.", "For content on sacrifice and loss, prepare a respectful introduction and give students a quiet moment; avoid noisy effects or turning it into entertainment."]] }
 };
 
 /* VIDEO: danh sách video nằm trong tệp videos.js (tạo bằng công cụ them-video.html), không cần sửa ở đây. */
@@ -456,14 +782,14 @@ const FORM_URL = "";
 const T = {
  vi:{
   brand:"Dấu ấn di sản Quảng Trị", eyebrow:"Thư viện video song ngữ Việt – Anh", h1:"Dấu ấn di sản Quảng Trị",
-  lede:"Tám di tích lịch sử từ sông Gianh đến Khe Sanh, kể bằng video có phụ đề tiếng Việt và tiếng Anh. Do học sinh và giáo viên Trường THCS Ba Đồn thực hiện.",
-  cta1:"Khám phá 8 di tích", cta2:"Cách sử dụng", heronote:"Video đang được bổ sung dần. Trang nào chưa có video sẽ ghi rõ.",
+  lede:"Tám di tích lịch sử từ vùng Tuyên Hóa, sông Gianh đến Khe Sanh. Mỗi nơi có một câu chuyện đầy đủ, câu hỏi suy ngẫm, hoạt động và nguồn tham khảo, kèm video phụ đề Việt – Anh do học sinh và giáo viên Trường THCS Ba Đồn thực hiện.",
+  cta1:"Khám phá 8 di tích", cta2:"Dành cho giáo viên", heronote:"Video đang được bổ sung dần. Trang nào chưa có video sẽ ghi rõ.",
   artN:"▲ Bắc Quảng Trị", artS:"▼ Nam Quảng Trị", artR:"Sông Bến Hải, cầu Hiền Lương",
-  nav:["Di tích","Mốc thời gian","Câu đố","Từ khó","Cách sử dụng","Giới thiệu"],
+  nav:["Di tích","Mốc thời gian","Câu đố","Từ khó","Giáo viên","Cách sử dụng","Giới thiệu"],
   hTime:"Dòng thời gian", iTime:"Các mốc lớn rút ra từ phần tóm tắt của từng di tích. Bấm tên di tích để đọc tiếp.", timeNote:"Mốc thời gian lấy từ phần tóm tắt của từng di tích, cần đối chiếu với tài liệu chính thức.",
-  hQuiz:"Câu đố nhỏ", iQuiz:"Năm câu hỏi dựa trên nội dung các trang di tích. Trả lời xong sẽ có giải thích.",
+  hQuiz:"Câu đố nhỏ", iQuiz:"Chín câu hỏi dựa trên nội dung các trang di tích. Trả lời xong sẽ có giải thích.",
   qProg:(a,n)=>"Câu "+a+" / "+n, qRight:"Đúng", qWrong:"Chưa đúng", qNext:"Câu tiếp theo", qFinish:"Xem kết quả", qAgain:"Làm lại", qSee:"Đọc về di tích này",
-  qAll:"Tuyệt vời, bạn trả lời đúng cả năm câu.", qGood:"Khá lắm. Hãy đọc thêm các trang di tích để nắm chắc hơn.", qTry:"Hãy đọc các trang di tích rồi thử lại nhé.",
+  qAll:"Tuyệt vời, bạn trả lời đúng tất cả các câu.", qGood:"Khá lắm. Hãy đọc thêm các trang di tích để nắm chắc hơn.", qTry:"Hãy đọc các trang di tích rồi thử lại nhé.",
   hGloss:"Giải nghĩa từ khó", iGloss:"Những từ bạn sẽ gặp khi đọc các trang di tích.",
   quick:"Số liệu nhanh", think:"Câu hỏi để suy ngẫm", thinkHint:"Đọc phần giới thiệu rồi thảo luận với bạn bè hoặc thầy cô.",
   hExplore:"Khám phá di tích", iExplore:"Tìm theo tên (có dấu hoặc không dấu), hoặc lọc theo khu vực, chủ đề và tình trạng video.",
@@ -488,18 +814,26 @@ const T = {
   pickv:"Chọn video", vpart:"Video", playerSoon:"Video sẽ được đăng tại đây", playerSub:"Phụ đề tiếng Việt và tiếng Anh sẽ đi kèm khi có video.",
   fbH:"Góp ý về di tích này", fbP:"Bạn thấy thông tin chưa đúng hoặc muốn bổ sung? Hãy gửi góp ý, không cần nêu tên.",
   fbBtn:"Gửi góp ý", fbNo:"Biểu mẫu góp ý sẽ được kết nối khi nhà trường tạo Google Forms.",
-  prev:"Di tích trước", next:"Di tích sau", vi:"Tiếng Việt", en:"English"
+  prev:"Di tích trước", next:"Di tích sau", vi:"Tiếng Việt", en:"English",
+  stats:[["8","di tích lịch sử"],["4 / 8","di tích gắn với năm 1972"],["17°","vĩ tuyến sông Bến Hải"],["Việt · EN","hai ngôn ngữ"]],
+  prog:n=>"Em đã đọc " + n + " / 8 di tích",
+  badge:"Đã đọc", objH:"Sau bài này em có thể", storyH:"Câu chuyện của di tích", taskH:"Hoạt động cho em", srcH:"Nguồn tham khảo",
+  srcNote:"Phần mô tả được viết từ các bài báo dưới đây. Hãy mở ra đọc và đối chiếu.",
+  toc:["Mục tiêu","Câu chuyện","Số liệu","Suy ngẫm","Nguồn"], tocLabel:"Mục lục trang",
+  readTime:n=>"Đọc khoảng " + n + " phút", readMark:"Đánh dấu đã đọc", readDone:"Đã đọc ✓",
+  sheetBtn:"In phiếu học tập", sheetH:"Phiếu học tập", sheetName:"Họ tên: ……………………  Lớp: ………",
+  hTeach:"Dành cho giáo viên", iTeach:"Gợi ý dùng trang trong một tiết học và trong dự án nhóm. Đây là đề xuất của nhóm dự án, chưa đối chiếu với kế hoạch giáo dục của nhà trường."
  },
  en:{
   brand:"Quang Tri Heritage", eyebrow:"Bilingual Vietnamese–English video library", h1:"Quang Tri Heritage",
-  lede:"Eight historic sites from the Gianh River to Khe Sanh, told in video with Vietnamese and English subtitles. Made by students and teachers of Ba Don Secondary School.",
-  cta1:"Explore the 8 sites", cta2:"How to use", heronote:"Videos are being added gradually. Pages without a video say so clearly.",
+  lede:"Eight historic sites from Tuyên Hóa and the Gianh River to Khe Sanh. Each has a full story, reflection questions, activities and sources, plus videos with Vietnamese–English subtitles made by students and teachers of Ba Don Secondary School.",
+  cta1:"Explore the 8 sites", cta2:"For teachers", heronote:"Videos are being added gradually. Pages without a video say so clearly.",
   artN:"▲ North Quảng Trị", artS:"▼ South Quảng Trị", artR:"Bến Hải River, Hiền Lương Bridge",
-  nav:["Sites","Timeline","Quiz","Glossary","How to use","About"],
+  nav:["Sites","Timeline","Quiz","Glossary","Teachers","How to use","About"],
   hTime:"Timeline", iTime:"Key dates drawn from each site's summary. Select a site name to read more.", timeNote:"Dates come from each site's summary and are to be checked against official sources.",
-  hQuiz:"Quick quiz", iQuiz:"Five questions based on the site pages. Each answer comes with an explanation.",
+  hQuiz:"Quick quiz", iQuiz:"Nine questions based on the site pages. Each answer comes with an explanation.",
   qProg:(a,n)=>"Question "+a+" of "+n, qRight:"Correct", qWrong:"Not quite", qNext:"Next question", qFinish:"See result", qAgain:"Try again", qSee:"Read about this site",
-  qAll:"Well done, all five answers are correct.", qGood:"Good work. Read more of the site pages to be sure.", qTry:"Read the site pages and try again.",
+  qAll:"Well done, every answer is correct.", qGood:"Good work. Read more of the site pages to be sure.", qTry:"Read the site pages and try again.",
   hGloss:"Glossary", iGloss:"Words you will meet on the site pages.",
   quick:"Quick facts", think:"Questions to think about", thinkHint:"Read the overview, then discuss with friends or teachers.",
   hExplore:"Explore the sites", iExplore:"Search by name (with or without diacritics), or filter by area, theme and video status.",
@@ -524,7 +858,15 @@ const T = {
   pickv:"Choose video", vpart:"Video", playerSoon:"The video will appear here", playerSub:"Vietnamese and English subtitles will come with the video.",
   fbH:"Feedback on this site", fbP:"Found something wrong or want to add something? Send feedback, no name needed.",
   fbBtn:"Send feedback", fbNo:"The feedback form will be connected once the school creates a Google Form.",
-  prev:"Previous site", next:"Next site", vi:"Tiếng Việt", en:"English"
+  prev:"Previous site", next:"Next site", vi:"Tiếng Việt", en:"English",
+  stats:[["8","historic sites"],["4 / 8","sites tied to 1972"],["17°","parallel of the Bến Hải River"],["VI · EN","two languages"]],
+  prog:n=>"You have read " + n + " of 8 sites",
+  badge:"Read", objH:"After this lesson you can", storyH:"The story of the site", taskH:"Activity for you", srcH:"Sources",
+  srcNote:"The description is written from the articles below. Open them and check.",
+  toc:["Goals","Story","Facts","Reflect","Sources"], tocLabel:"Page contents",
+  readTime:n=>"About " + n + " min read", readMark:"Mark as read", readDone:"Read ✓",
+  sheetBtn:"Print worksheet", sheetH:"Worksheet", sheetName:"Name: ……………………  Class: ………",
+  hTeach:"For teachers", iTeach:"Ideas for using the site in one lesson and in group projects. These are the project team’s suggestions and have not been checked against the school’s education plan."
  }
 };
 
@@ -555,7 +897,7 @@ function applyText() {
   $("brand").textContent = t.brand; $("eyebrow").textContent = t.eyebrow; $("h1").textContent = t.h1; $("lede").textContent = t.lede;
   $("cta1").textContent = t.cta1; $("cta2").textContent = t.cta2; $("heronote").textContent = t.heronote;
   $("artN").textContent = t.artN; $("artS").textContent = t.artS; $("artR").textContent = t.artR;
-  $("nav").innerHTML = ["kham-pha", "moc-thoi-gian", "cau-do", "tu-kho", "huong-dan", "gioi-thieu"].map((id, i) => '<a href="#' + id + '">' + t.nav[i] + '</a>').join("");
+  $("nav").innerHTML = ["kham-pha", "moc-thoi-gian", "cau-do", "tu-kho", "giao-vien", "huong-dan", "gioi-thieu"].map((id, i) => '<a href="#' + id + '">' + t.nav[i] + '</a>').join("");
   $("h-explore").textContent = t.hExplore; $("i-explore").textContent = t.iExplore;
   $("lq").textContent = t.search; $("q").placeholder = t.ph; $("lfr").textContent = t.region; $("lft").textContent = t.theme; $("lfv").textContent = t.video;
   $("clear").textContent = t.clear; $("maptitle").textContent = t.maptitle; $("mapnote").textContent = t.mapnote;
@@ -567,6 +909,7 @@ function applyText() {
     '<div class="box warn" style="grid-column:1/-1"><h3>' + t.warnH + '</h3><p>' + t.foot + '</p></div>';
   $("fname").textContent = t.school; $("foot").textContent = t.brand + " · " + t.eyebrow; $("skip").textContent = lang === "en" ? "Skip to content" : "Đi tới nội dung";
   ["vi", "en", "both"].forEach(k => $(k === "vi" ? "bvi" : k === "en" ? "ben" : "bboth").setAttribute("aria-pressed", String(lang === k)));
+  $("stats").innerHTML = t.stats.map(x => '<div><b>' + x[0] + '</b><span>' + x[1] + '</span></div>').join("");
   buildSelects(); renderExtras();
 }
 
@@ -578,13 +921,13 @@ function filtered() {
 function renderHome() {
   const t = ui(), L = pl(), list = filtered(), ids = new Set(list.map(s => s.id));
   if (selected && !ids.has(selected)) selected = null;
-  $("status").textContent = t.count(list.length);
+  $("status").textContent = t.count(list.length); $("progress").textContent = t.prog(SITES.filter(x => readSet.has(x.slug)).length);
   const box = $("cards");
   if (!list.length) box.innerHTML = '<div class="empty">' + t.none + '</div>';
   else box.innerHTML = list.map(s => {
     const X = s[L], other = lang === "both" ? s.en.name : (L === "vi" ? s.en.name : s.vi.name);
     return '<article class="card' + (selected === s.id ? ' on' : '') + '" id="c' + s.id + '" data-id="' + s.id + '">' +
-      '<div class="ph ' + s.region + '"><span class="num">' + String(s.id).padStart(2, "0") + '</span><span class="reg">' + REG[s.region][L] + '</span></div>' +
+      '<div class="ph ' + s.region + '">' + iconSvg(s.themes[0], "pico") + '<span class="num">' + String(s.id).padStart(2, "0") + '</span><span class="reg">' + REG[s.region][L] + '</span>' + (readSet.has(s.slug) ? '<span class="rd">✓ ' + t.badge + '</span>' : '') + '</div>' +
       '<div class="cbody"><h3>' + X.name + '</h3><p class="alt">' + other + '</p><p class="sum">' + X.sum + '</p>' +
       '<div class="tags">' + s.themes.map(k => '<span class="tag">' + THEMES[k][L] + '</span>').join("") + '</div>' +
       '<div class="vid">' + VID[s.status][L] + '</div>' +
@@ -654,22 +997,82 @@ function playerHtml(s) {
   }).join("") + '</div>' : '';
   return '<div class="vwrap">' + tabs + '<div class="player has">' + mediaHtml(s, v) + '</div>' + (title ? '<p class="vcap">' + esc(title) + '</p>' : '') + '</div>';
 }
+/* ===== Biểu tượng nhỏ theo chủ đề (vẽ bằng nét, dùng trên thẻ và trang chi tiết) ===== */
+const ICONS = {
+ "giao-thong": '<path d="M3 14h18l-2.2 4.5H5.2z"/><path d="M12 14V4l6 8"/><path d="M2.5 21c1.9 0 1.9-1.1 3.8-1.1S8.200 21 10.100 21s1.900-1.100 3.800-1.100S15.800 21 17.700 21s1.900-1.100 3.800-1.100"/>',
+ "tnxp": '<path d="M12 3l2.600 5.600 6.100.7-4.500 4.200 1.200 6L12 16.500 6.600 19.500l1.200-6L3.300 9.300l6.100-.7z"/>',
+ "doi-song": '<path d="M3 20v-8a9 9 0 0 1 18 0v8z"/><path d="M8 20v-5a4 4 0 0 1 8 0v5"/>',
+ "chien-dau": '<path d="M3 20V8h3v2.500h3V8h3v2.500h3V8h3v12z"/><path d="M10 20v-4a2 2 0 0 1 4 0v4"/>',
+ "chia-cat": '<path d="M2 15h20"/><path d="M4 15c0-5.500 3.500-8 8-8s8 2.500 8 8"/><path d="M8 15V9.500M12 15V7M16 15V9.500"/><path d="M2 19h20" stroke-dasharray="3 3"/>',
+ "thong-tin": '<path d="M12 12.500V21"/><circle cx="12" cy="10" r="2"/><path d="M7.300 5.300a6.600 6.600 0 0 0 0 9.400M16.700 5.300a6.600 6.600 0 0 1 0 9.400M4.500 2.500a10.500 10.500 0 0 0 0 15M19.500 2.500a10.500 10.500 0 0 1 0 15"/>'
+};
+const iconSvg = (k, cls) => '<svg class="' + (cls || "ico") + '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + (ICONS[k] || ICONS["chia-cat"]) + '</svg>';
+
+/* ===== Đánh dấu đã đọc (lưu trên trình duyệt đang dùng) ===== */
+const readSet = new Set();
+try { (JSON.parse(localStorage.getItem("dadsqt-read") || "[]") || []).forEach(x => { if (typeof x === "string") readSet.add(x); }); } catch (e) {}
+function saveRead() { try { localStorage.setItem("dadsqt-read", JSON.stringify([...readSet])); } catch (e) {} }
+
 function quickHtml(s) {
   const k = pl() === "vi" ? 1 : 2, e = EXTRA[s.slug][0];
-  return '<h2 class="qh">' + ui().quick + '</h2><div class="quick">' + e.map(f => '<div class="qf"><b>' + ((pl() === "en" && f[3]) || f[0]) + '</b><span>' + f[k] + (lang === "both" ? '<i>' + f[2] + '</i>' : '') + '</span></div>').join("") + '</div>';
+  return '<section id="s-facts"><h2 class="qh">' + ui().quick + '</h2><div class="quick">' + e.map(f => '<div class="qf"><b>' + ((pl() === "en" && f[3]) || f[0]) + '</b><span>' + f[k] + (lang === "both" ? '<i>' + f[2] + '</i>' : '') + '</span></div>').join("") + '</div></section>';
+}
+function thinkItems(s) {
+  const q = EXTRA[s.slug][1], L = pl();
+  return lang === "both" ? [[q[0], q[1]], [q[2], q[3]]] : (L === "vi" ? [[q[0]], [q[2]]] : [[q[1]], [q[3]]]);
 }
 function thinkHtml(s) {
-  const q = EXTRA[s.slug][1], t = ui(), L = pl();
-  const items = lang === "both" ? [[q[0], q[1]], [q[2], q[3]]].map(p => '<li>' + p[0] + '<i>' + p[1] + '</i></li>') : (L === "vi" ? [q[0], q[2]] : [q[1], q[3]]).map(x => '<li>' + x + '</li>');
-  return '<div class="think"><h2>' + t.think + '</h2><p class="thint">' + t.thinkHint + '</p><ol>' + items.join("") + '</ol></div>';
+  const t = ui(), L = pl(), lg = LONG[s.slug], both = lang === "both";
+  const items = thinkItems(s).map(p => '<li>' + p[0] + (p[1] ? '<i>' + p[1] + '</i>' : '') + '</li>').join("");
+  const task = both ? lg.task.vi + '<i>' + lg.task.en + '</i>' : lg.task[L];
+  return '<section id="s-think"><div class="think"><h2>' + t.think + '</h2><p class="thint">' + t.thinkHint + '</p><ol>' + items + '</ol></div>' +
+    '<div class="task"><h2>' + t.taskH + '</h2><p>' + task + '</p></div></section>';
+}
+function storyHtml(s) {
+  const t = ui(), L = pl(), lg = LONG[s.slug], both = lang === "both";
+  const paras = lg.story.vi.map((p, i) => {
+    const q = lg.story.en[i];
+    const body = both
+      ? '<div class="lang2"><div><span class="lbl">' + T.vi.vi + '</span><p>' + p[1] + '</p></div><div><span class="lbl">' + T.vi.en + '</span><p class="en2">' + q[1] + '</p></div></div>'
+      : '<p>' + (L === "vi" ? p[1] : q[1]) + '</p>';
+    const head = both ? p[0] + ' <small>· ' + q[0] + '</small>' : (L === "vi" ? p[0] : q[0]);
+    let out = '<div class="para"><h3>' + head + '</h3>' + body + '</div>';
+    if (i === 1 && lg.pull) {
+      const qt = both ? lg.pull.vi + '<small>' + lg.pull.en + '</small>' : lg.pull[L];
+      const who = both ? lg.pull.who + ' · ' + lg.pull.whoEn : (L === "vi" ? lg.pull.who : lg.pull.whoEn);
+      out += '<blockquote class="pull"><p>' + qt + '</p><cite>' + who + '</cite></blockquote>';
+    }
+    return out;
+  }).join("");
+  return '<section id="s-story" class="story"><h2>' + t.storyH + '</h2>' + paras + '</section>';
+}
+function objHtml(s) {
+  const t = ui(), L = pl(), lg = LONG[s.slug], both = lang === "both";
+  const li = lg.obj.vi.map((x, i) => '<li>' + (both ? x + '<i>' + lg.obj.en[i] + '</i>' : (L === "vi" ? x : lg.obj.en[i])) + '</li>').join("");
+  return '<section id="s-obj" class="objs"><h2>' + t.objH + '</h2><ul>' + li + '</ul></section>';
+}
+function srcHtml(s) {
+  const t = ui(), lg = LONG[s.slug];
+  return '<section id="s-src" class="srcs"><h2>' + t.srcH + '</h2><p class="thint">' + t.srcNote + '</p><ul>' +
+    lg.src.map(x => '<li><a href="' + esc(x[1]) + '" target="_blank" rel="noopener">' + esc(x[0]) + '</a></li>').join("") + '</ul></section>';
+}
+function readMinutes(s) {
+  const w = LONG[s.slug].story.vi.map(p => p[1]).join(" ").split(/\s+/).length;
+  return Math.max(2, Math.round(w / 170));
+}
+function sheetHtml(s) {
+  const t = ui(), L = pl(), lg = LONG[s.slug], qs = thinkItems(s).map(p => p[0]);
+  const lines = '<div class="wl"></div><div class="wl"></div><div class="wl"></div>';
+  return '<section id="sheet" class="sheet" aria-hidden="true"><h1>' + t.sheetH + ': ' + s[L].name + '</h1>' +
+    '<p class="sline">' + t.sheetName + '</p><h2>' + t.objH + '</h2><ul>' + lg.obj[L].map(x => '<li>' + x + '</li>').join("") + '</ul>' +
+    '<h2>' + t.think + '</h2><ol>' + qs.map(x => '<li>' + x + lines + '</li>').join("") + '</ol>' +
+    '<h2>' + t.taskH + '</h2><p>' + lg.task[L] + '</p>' + lines + lines +
+    '<p class="sfoot">' + t.brand + ' · ' + t.school + '</p></section>';
 }
 function renderDetail(s) {
   const t = ui(), L = pl(), i = SITES.indexOf(s), prev = SITES[i - 1], next = SITES[i + 1];
   const X = s[L], both = lang === "both";
   const alt = both ? s.en.name : (L === "vi" ? s.en.name : s.vi.name);
-  const sum = both
-    ? '<div class="lang2"><div><span class="lbl">' + T.vi.vi + '</span><p>' + s.vi.sum + '</p></div><div><span class="lbl">' + T.vi.en + '</span><p>' + s.en.sum + '</p></div></div>'
-    : '<p>' + X.sum + '</p>';
   const fact = (k, v) => '<div><dt>' + k + '</dt><dd>' + v + '</dd></div>';
   const facts = both
     ? fact(T.vi.addr + " / Address", s.vi.addr + '<br><i>' + s.en.addr + '</i>') + fact(T.vi.rank + " / Ranking", s.vi.rank + '<br><i>' + s.en.rank + '</i>')
@@ -677,29 +1080,64 @@ function renderDetail(s) {
   const fb = FORM_URL
     ? '<a class="btn" href="' + FORM_URL + '" target="_blank" rel="noopener">' + t.fbBtn + '</a>'
     : '<div><span class="btn" aria-disabled="true">' + t.fbBtn + '</span></div>';
+  const done = readSet.has(s.slug);
+  const toc = [["s-obj", t.toc[0]], ["s-story", t.toc[1]], ["s-facts", t.toc[2]], ["s-think", t.toc[3]], ["s-src", t.toc[4]]];
   $("detail").innerHTML =
     '<div class="wrap dwrap">' +
     '<a class="back" href="#kham-pha">' + t.back + '</a>' +
-    '<div class="dhead"><span class="big" aria-hidden="true">' + String(s.id).padStart(2, "0") + '</span><div><h1 id="dh1" tabindex="-1">' + X.name + '</h1><p class="altn">' + alt + '</p></div></div>' +
-    '<div class="chips"><span class="chip ' + s.region + '">' + REG[s.region][L] + '</span>' + s.themes.map(k => '<span class="chip">' + THEMES[k][L] + '</span>').join("") + '</div>' +
+    '<header class="dbanner ' + s.region + '">' + iconSvg(s.themes[0], "bico") +
+      '<span class="big" aria-hidden="true">' + String(s.id).padStart(2, "0") + '</span>' +
+      '<div class="dtitle"><h1 id="dh1" tabindex="-1">' + X.name + '</h1><p class="altn">' + alt + '</p>' +
+      '<div class="chips"><span class="chip">' + REG[s.region][L] + '</span>' + s.themes.map(k => '<span class="chip">' + THEMES[k][L] + '</span>').join("") + '<span class="chip">' + t.readTime(readMinutes(s)) + '</span></div></div>' +
+    '</header>' +
     playerHtml(s) +
-    quickHtml(s) +
-    '<div class="dgrid' + (both ? ' both' : '') + '">' +
-      '<div class="dsum"><h2>' + t.sumH + '</h2>' + sum +
-      '<div class="row" style="margin-top:16px"><a class="btn ghost" href="' + gmaps(s) + '" target="_blank" rel="noopener">' + t.maps + '</a></div></div>' +
-      '<div class="facts"><h2>' + t.factsH + '</h2><span class="verify">' + t.verify + '</span><dl>' + facts + '</dl></div>' +
-    '</div>' +
-    thinkHtml(s) +
+    '<nav class="toc" aria-label="' + t.tocLabel + '">' + toc.map(x => '<button type="button" class="tocb" data-t="' + x[0] + '">' + x[1] + '</button>').join("") + '</nav>' +
+    objHtml(s) + storyHtml(s) + quickHtml(s) + thinkHtml(s) +
+    '<div class="dgrid one"><div class="facts"><h2>' + t.factsH + '</h2><span class="verify">' + t.verify + '</span><dl>' + facts + '</dl>' +
+      '<div class="row" style="margin-top:14px"><a class="btn ghost" href="' + gmaps(s) + '" target="_blank" rel="noopener">' + t.maps + '</a></div></div></div>' +
+    srcHtml(s) +
+    '<div class="actions"><button type="button" class="btn' + (done ? ' ghost' : '') + '" id="markread" aria-pressed="' + done + '">' + (done ? t.readDone : t.readMark) + '</button>' +
+      '<button type="button" class="btn ghost" id="printsheet">' + t.sheetBtn + '</button></div>' +
     '<div class="fb"><div><h2 style="font-size:1.05rem;color:var(--green);margin-bottom:6px">' + t.fbH + '</h2><p>' + t.fbP + (FORM_URL ? '' : ' ' + t.fbNo) + '</p></div>' + fb + '</div>' +
     '<nav class="pn" aria-label="Pagination">' +
       (prev ? '<a href="' + hashOf(prev) + '"><small>← ' + t.prev + '</small><b>' + prev[L].name + '</b></a>' : '<a class="ghost" aria-hidden="true" tabindex="-1">&nbsp;</a>') +
       (next ? '<a href="' + hashOf(next) + '"><small>' + t.next + ' →</small><b>' + next[L].name + '</b></a>' : '<a class="ghost" aria-hidden="true" tabindex="-1">&nbsp;</a>') +
-    '</nav></div>';
+    '</nav>' + sheetHtml(s) + '</div>';
   $("detail").querySelectorAll(".vtab").forEach(btn => btn.onclick = () => {
     vsel[s.slug] = +btn.dataset.i; renderDetail(s);
     const on = $("detail").querySelector('.vtab[aria-selected="true"]'); if (on) on.focus({ preventScroll: true });
   });
+  $("detail").querySelectorAll(".tocb").forEach(b => b.onclick = () => {
+    const el = $(b.dataset.t); if (!el) return;
+    el.scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "start" });
+  });
+  $("markread").onclick = () => { if (readSet.has(s.slug)) readSet.delete(s.slug); else readSet.add(s.slug); saveRead(); renderDetail(s); const b = $("markread"); if (b) b.focus({ preventScroll: true }); };
+  $("printsheet").onclick = () => {
+    document.body.classList.add("printing");
+    const off = () => { document.body.classList.remove("printing"); window.removeEventListener("afterprint", off); };
+    window.addEventListener("afterprint", off);
+    try { window.print(); } catch (e) { off(); }
+  };
 }
+function updateBar() {
+  const bar = $("rbar"); if (!bar) return;
+  if ($("detail").hidden) { bar.style.width = "0"; return; }
+  const h = document.documentElement.scrollHeight - innerHeight;
+  bar.style.width = (h > 0 ? Math.min(100, Math.max(0, scrollY / h * 100)) : 0) + "%";
+}
+window.addEventListener("scroll", updateBar, { passive: true });
+
+/* ===== Mục "Dành cho giáo viên" ===== */
+function renderTeacher() {
+  const t = ui(), L = pl(), k = L === "vi" ? 0 : 1, c = TEACH;
+  $("h-teach").textContent = t.hTeach; $("i-teach").textContent = t.iTeach;
+  const lesson = '<div class="tcard"><h3>' + c.lesson.h[k] + '</h3><ol class="tl">' + c.lesson.steps.map(x => '<li><b>' + x[0] + '</b> ' + x[k + 1] + '</li>').join("") + '</ol></div>';
+  const proj = '<div class="tcard"><h3>' + c.proj.h[k] + '</h3><p>' + c.proj.p[k] + '</p><ul>' + c.proj.pairs.map(x => '<li>' + x[k] + '</li>').join("") + '</ul></div>';
+  const cross = '<div class="tcard wide"><h3>' + c.cross.h[k] + '</h3><div class="xgrid">' + c.cross.items.map(x => '<div><b>' + x[0][k] + '</b><span>' + x[1][k] + '</span></div>').join("") + '</div></div>';
+  const rule = '<div class="tcard wide soft"><h3>' + c.rule.h[k] + '</h3><ul>' + c.rule.items.map(x => '<li>' + x[k] + '</li>').join("") + '</ul></div>';
+  $("teach").innerHTML = lesson + proj + cross + rule;
+}
+
 
 function setView(v) { $("layout").dataset.view = v; $("vmap").setAttribute("aria-pressed", String(v === "map")); $("vlist").setAttribute("aria-pressed", String(v === "list")); }
 
@@ -717,6 +1155,7 @@ function route() {
     const el = h && $(h);
     if (el) el.scrollIntoView(); else window.scrollTo(0, 0);
   }
+  updateBar();
 }
 
 
@@ -732,9 +1171,9 @@ const EXTRA = {
  "pha-long-dai":[
   [["Đường 15","Tuyến đường qua bến phà","Route crossing the ferry","Route 15"],["9/1972","16 thanh niên xung phong Đại đội 130 hy sinh","16 youth volunteers of Company 130 died"]],
   ["Vì sao nơi này được gọi là “yết hầu” của con đường chi viện?","Why was this place called the “throat” of the supply route?","Việc vượt sông bằng phà khác gì so với đi qua cầu?","How is crossing a river by ferry different from using a bridge?"]],
- "ben-pha-xuan-son":[
-  [["1965","Năm mở bến phà (theo trang du lịch, cần đối chiếu)","Year the ferry opened (travel-site info, to be checked)"],["Sông Son","Bến phà ở gần Phong Nha","Ferry near Phong Nha","Son River"]],
-  ["Một bến đò dân sinh trở thành điểm vận chuyển chi viện như thế nào?","How did a local river crossing become a supply point?","Em có thể tìm thêm tư liệu ở đâu để kiểm tra thông tin này?","Where could you find more sources to check this information?"]],
+ "hang-len-ha":[
+  [["2/7/1972","Ngày 13 cán bộ, chiến sĩ hy sinh; liên lạc thông suốt lại sau khoảng 1 giờ","Day 13 officers and soldiers died; the line worked again in about 1 hour"],["13","Người hy sinh: 10 nữ, 3 nam","Lives lost: 10 women, 3 men"],["7/1/1967","Ngày thành lập Trạm thông tin A69","Founding date of Station A69"],["269","Bậc thang lên khu đặt máy","Steps up to the equipment room"]],
+  ["Theo em, vì sao người ta chọn một hang đá làm nơi đặt trạm thông tin?","In your view, why was a rock cave chosen for a communications station?","Khi mất liên lạc, một đơn vị đang chiến đấu có thể gặp nguy hiểm gì?","What danger can a fighting unit face when it loses contact?"]],
  "hien-luong-ben-hai":[
   [["17","Vĩ tuyến, giới tuyến quân sự tạm thời","Parallel, temporary military demarcation line"],["1952 · 1967","Năm xây cầu · năm bị đánh sập","Year built · year destroyed"]],
   ["Vì sao một cây cầu lại trở thành biểu tượng của sự chia cắt?","Why did a bridge become a symbol of division?","Việc xây lại cầu sau thống nhất có ý nghĩa gì?","What does rebuilding the bridge after reunification mean?"]],
@@ -750,16 +1189,20 @@ const EXTRA = {
 };
 
 const TIMELINE = [
- ["1952","1952","hien-luong-ben-hai","Cầu Hiền Lương do Pháp xây.","The Hiền Lương Bridge is built by the French."],
+ ["1952","1952","hien-luong-ben-hai","Cầu Hiền Lương được đưa vào sử dụng (cầu do Pháp xây).","The Hiền Lương Bridge opens (built by the French)."],
  ["1954","1954","hien-luong-ben-hai","Hiệp định Genève: vĩ tuyến 17 thành giới tuyến quân sự tạm thời.","Geneva Accords: the 17th parallel becomes the temporary military demarcation line."],
  ["1965","1965","dia-dao-vinh-moc","Người dân Vĩnh Linh bắt đầu đào địa đạo Vịnh Mốc.","People of Vĩnh Linh begin digging the Vịnh Mốc tunnels."],
- ["1965","1965","ben-pha-xuan-son","Mở bến phà Xuân Sơn (theo trang du lịch, cần đối chiếu).","Xuân Sơn Ferry opens (travel-site info, to be checked)."],
  ["1966","1966–1968","san-bay-ta-con-khe-sanh","Cụm cứ điểm Khe Sanh của Mỹ hoạt động.","The US base complex at Khe Sanh is in operation."],
- ["1967","1967","hien-luong-ben-hai","Cầu Hiền Lương bị đánh sập.","The Hiền Lương Bridge is destroyed."],
- ["1968","9/7/1968","san-bay-ta-con-khe-sanh","Quân giải phóng cắm cờ tại cứ điểm Khe Sanh.","Liberation forces raise their flag at the Khe Sanh base."],
+ ["1967a","7/1/1967","hang-len-ha","Thành lập Trạm thông tin A69 tại hang Lèn Hà.","Communications Station A69 is founded at Lèn Hà Cave."],
+ ["1967b","1967","hien-luong-ben-hai","Cầu Hiền Lương bị đánh sập.","The Hiền Lương Bridge is destroyed."],
+ ["1968","9/7/1968","san-bay-ta-con-khe-sanh","Quân giải phóng làm chủ cứ điểm sân bay Tà Cơn, kết thúc Chiến dịch Đường 9 – Khe Sanh.","Liberation forces take the Tà Cơn airfield base, ending the Route 9 – Khe Sanh Campaign."],
  ["1972a","28/6–16/9/1972","thanh-co-quang-tri","81 ngày đêm chiến đấu ở thị xã và Thành cổ Quảng Trị.","81 days and nights of fighting for Quảng Trị town and the Citadel."],
- ["1972b","9/1972","pha-long-dai","16 thanh niên xung phong Đại đội 130 hy sinh tại phà Long Đại.","16 youth volunteers of Company 130 die at Long Đại Ferry."],
- ["1972c","14/11/1972","hang-tam-co","13 cán bộ, chiến sĩ hy sinh trong hang Tám Cô.","13 officers and soldiers die in Tám Cô Cave."],
+ ["1972b","2/7/1972","hang-len-ha","Máy bay Mỹ ném bom Trạm A69, 13 cán bộ, chiến sĩ hy sinh; sau khoảng 1 giờ liên lạc thông suốt trở lại.","US aircraft bomb Station A69, 13 officers and soldiers die; the line works again in about an hour."],
+ ["1972c","19/9/1972","pha-long-dai","Bom trúng Phà II Long Đại, 15 thanh niên xung phong hy sinh (đến 23/9 tổng cộng 16 người).","Bombs hit Long Đại Ferry II, 15 youth volunteers die (16 in all by 23 September)."],
+ ["1972d","14/11/1972","hang-tam-co","Khối đá sập bịt cửa hang Tám Cô, 13 cán bộ, chiến sĩ hy sinh.","A boulder seals Tám Cô Cave, 13 officers and soldiers die."],
+ ["1996","1996","hang-tam-co","Quảng Bình phá đá, đưa hài cốt các liệt sĩ ra khỏi hang.","Quảng Bình breaks the rock and brings the martyrs’ remains out of the cave."],
+ ["2009","7/5/2009","hang-len-ha","Hang Lèn Hà được xếp hạng di tích lịch sử cấp quốc gia.","Lèn Hà Cave is ranked a national historical site."],
+ ["2025","9/9/2025","pha-long-dai","Bến phà Long Đại II được xếp hạng di tích lịch sử cấp quốc gia.","Long Đại II Ferry is ranked a national historical site."],
  ["2026","19/4/2026","ben-pha-gianh","Khánh thành khu di tích Bến phà Gianh sau tôn tạo.","The renovated Gianh Ferry memorial is inaugurated."]
 ];
 
@@ -773,13 +1216,27 @@ const QUIZ = [
  {q:["Sau Hiệp định Genève 1954, giới tuyến quân sự tạm thời nằm ở vĩ tuyến nào?","After the 1954 Geneva Accords, which parallel was the temporary military demarcation line?"], o:[["Vĩ tuyến 17","17th parallel"],["Vĩ tuyến 15","15th parallel"],["Vĩ tuyến 20","20th parallel"],["Vĩ tuyến 38","38th parallel"]], a:0,
   e:["Giới tuyến nằm ở vĩ tuyến 17, dọc sông Bến Hải.","The line lay along the 17th parallel, on the Bến Hải River."], s:"hien-luong-ben-hai"},
  {q:["Phà Long Đại nằm trên tuyến đường nào?","Which route does Long Đại Ferry sit on?"], o:[["Quốc lộ 1A","National Highway 1A"],["Đường 20","Route 20"],["Đường 9","Route 9"],["Đường 15","Route 15"]], a:3,
-  e:["Phà Long Đại ở trên Đường 15, được gọi là “yết hầu” của con đường chi viện.","Long Đại Ferry is on Route 15, called the “throat” of the supply route."], s:"pha-long-dai"}
+  e:["Phà Long Đại ở trên Đường 15, được gọi là “yết hầu” của con đường chi viện.","Long Đại Ferry is on Route 15, called the “throat” of the supply route."], s:"pha-long-dai"},
+ {q:["Chiều 2/7/1972, có bao nhiêu cán bộ, chiến sĩ Trạm thông tin A69 hy sinh ở hang Lèn Hà?","On the afternoon of 2 July 1972, how many officers and soldiers of Station A69 died at Lèn Hà Cave?"], o:[["10 người","10"],["13 người","13"],["16 người","16"],["8 người","8"]], a:1,
+  e:["13 người hy sinh, gồm 10 nữ và 3 nam; chỉ sau khoảng một giờ, liên lạc Bắc – Nam đã thông suốt trở lại.","13 died, 10 women and 3 men; in about an hour North–South communication was restored."], s:"hang-len-ha"},
+ {q:["Tám thanh niên xung phong hy sinh trong hang Tám Cô quê ở đâu (theo Báo Pháp luật)?","Where were the eight youth volunteers who died in Tám Cô Cave from (per Báo Pháp luật)?"], o:[["Vĩnh Linh, Quảng Trị","Vĩnh Linh, Quảng Trị"],["Hoằng Hóa, Thanh Hóa","Hoằng Hóa, Thanh Hóa"],["Ba Đồn, Quảng Bình","Ba Đồn, Quảng Bình"],["Triệu Phong, Quảng Trị","Triệu Phong, Quảng Trị"]], a:1,
+  e:["Cả tám người đều quê ở huyện Hoằng Hóa, tỉnh Thanh Hóa.","All eight came from Hoằng Hóa District, Thanh Hóa Province."], s:"hang-tam-co"},
+ {q:["Ngày 19/9/1972, có bao nhiêu thanh niên xung phong hy sinh tại Phà II Long Đại?","On 19 September 1972, how many youth volunteers died at Long Đại Ferry II?"], o:[["16 người","16"],["13 người","13"],["15 người","15"],["8 người","8"]], a:2,
+  e:["Ngày 19/9 có 15 người hy sinh; ngày 23/9 thêm một người nữa, tổng cộng 16.","15 died on 19 September; one more on 23 September, 16 in all."], s:"pha-long-dai"},
+ {q:["Khu di tích Bến phà Gianh sau tôn tạo được khánh thành ngày nào?","When was the renovated Gianh Ferry memorial inaugurated?"], o:[["19/4/2026","19 April 2026"],["30/4/2025","30 April 2025"],["2/9/2026","2 September 2026"],["9/7/2025","9 July 2025"]], a:0,
+  e:["Khánh thành ngày 19/4/2026, sau hơn 60 ngày thi công.","Inaugurated on 19 April 2026, after just over 60 days of construction."], s:"ben-pha-gianh"}
 ];
 
 const GLOSS = [
  [["Vĩ tuyến","Parallel (of latitude)"],["Đường tưởng tượng vòng quanh Trái Đất, song song với xích đạo, dùng để chỉ vị trí về phía bắc hay phía nam.","An imaginary line around the Earth parallel to the equator, used to give a position north or south."]],
  [["Giới tuyến quân sự tạm thời","Temporary military demarcation line"],["Đường ranh giới tạm thời giữa hai bên theo Hiệp định Genève 1954. Ở Việt Nam, đó là vĩ tuyến 17.","A temporary boundary between two sides under the 1954 Geneva Accords. In Vietnam it ran along the 17th parallel."]],
  [["Địa đạo","Tunnel network"],["Hệ thống đường hầm đào dưới lòng đất để ở, cất giấu và đi lại an toàn.","A system of tunnels dug underground for living, hiding and moving safely."]],
+ [["Yết hầu","Chokepoint"],["Nghĩa gốc là cổ họng; nghĩa bóng là chỗ hiểm yếu nhất của một tuyến đường, nếu bị chặn thì cả tuyến bị tắc.","Literally the throat; figuratively the most vital point of a route, which if blocked chokes the whole route."]],
+ [["Tọa độ lửa","Fire coordinate"],["Cách gọi nơi bị đánh phá liên tục và ác liệt trong chiến tranh.","A name for a place attacked continually and fiercely in wartime."]],
+ [["Trạm thông tin","Signal station"],["Nơi đặt máy và đường dây để truyền tin giữa các đơn vị.","A place with equipment and lines for passing messages between units."]],
+ [["Liệt sĩ","Martyr (fallen soldier)"],["Người hy sinh vì Tổ quốc, được Nhà nước và nhân dân ghi nhận công lao.","A person who died for the country, honoured by the State and the people."]],
+ [["Hiệp định Paris","Paris Agreement"],["Hiệp định ký năm 1973 về chấm dứt chiến tranh, lập lại hòa bình ở Việt Nam.","The 1973 agreement on ending the war and restoring peace in Vietnam."]],
+ [["Di tích quốc gia đặc biệt","Special national monument"],["Hạng cao nhất trong các hạng di tích ở Việt Nam, cao hơn di tích quốc gia.","The highest rank of historic sites in Vietnam, above national monuments."]],
  [["Thanh niên xung phong","Youth volunteers"],["Lực lượng thanh niên tình nguyện làm những việc như mở đường, giữ đường thông suốt và vận chuyển.","Young volunteers who did work such as building roads, keeping them open and moving supplies."]]
 ];
 
@@ -798,7 +1255,7 @@ function renderGloss() {
 function renderQuiz() {
   const t = ui(), L = pl(), k = L === "vi" ? 0 : 1, box = $("quiz");
   if (qi >= QUIZ.length) {
-    const msg = qscore === QUIZ.length ? t.qAll : qscore >= 3 ? t.qGood : t.qTry;
+    const msg = qscore === QUIZ.length ? t.qAll : qscore >= Math.ceil(QUIZ.length * 0.6) ? t.qGood : t.qTry;
     box.innerHTML = '<div class="qdone"><p class="qscore">' + qscore + ' / ' + QUIZ.length + '</p><p>' + msg + '</p><button type="button" class="btn" id="qagain">' + t.qAgain + '</button></div>';
     $("qagain").onclick = () => { qi = 0; qscore = 0; qpicked = null; renderQuiz(); };
     return;
@@ -818,7 +1275,7 @@ function renderExtras() {
   $("h-time").textContent = t.hTime; $("i-time").textContent = t.iTime; $("timenote").textContent = t.timeNote;
   $("h-quiz").textContent = t.hQuiz; $("i-quiz").textContent = t.iQuiz;
   $("h-gloss").textContent = t.hGloss; $("i-gloss").textContent = t.iGloss;
-  renderTimeline(); renderGloss(); renderQuiz();
+  renderTimeline(); renderGloss(); renderQuiz(); renderTeacher();
 }
 
 function setLang(l) {

@@ -20,3 +20,8 @@ CACH THEM MOT VIDEO (4 buoc)
 LUU Y KHI DAT TEN TEP: chi dung chu khong dau, so, dau gach ngang. Khong dung khoang trang.
 Vi du dung:  gioi-thieu.mp4    gioi-thieu-vi.vtt    anh-bia.jpg
 Phu de (.vtt) phai luu bang ma hoa UTF-8 de khong loi dau tieng Viet.
+
+CAP NHAT TU BAN CU (doi 2: them Hang Len Ha, mo ta dai)
+- Thu muc videos\ben-pha-xuan-son khong con dung nua; thu muc moi la videos\hang-len-ha.
+- Neu da khai bao video cho "ben-pha-xuan-son" trong videos.js, hay xoa muc do (trang moi khong doc muc nay).
+- Cap nhat tren GitHub: Add file > Upload files, keo tha lai index.html, them-video.html, HUONG-DAN.txt va thu muc videos. Giu nguyen videos.js neu da co video.
