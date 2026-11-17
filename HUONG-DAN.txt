@@ -1,0 +1,22 @@
+﻿THU MUC WEBSITE "DAU AN DI SAN QUANG TRI"
+
+Cac tep va thu muc:
+  index.html         Trang web. Thuong khong can sua.
+  videos.js          Danh sach video. Do cong cu them-video.html tao ra.
+  them-video.html    Cong cu co nut bam de khai bao video. Nhap dup de mo.
+  videos\            Noi tha video, phu de, anh bia cua tung di tich.
+    ben-pha-gianh\   ... va 7 thu muc khac, moi di tich mot thu muc.
+    MAU-phu-de.vtt   Tep mau de xem dinh dang phu de.
+
+CACH THEM MOT VIDEO (4 buoc)
+1. Chon noi luu video:
+   - YouTube (khuyen dung): tai video len YouTube, che do "Khong cong khai".
+   - Google Drive: tai video len Drive, chia se "Bat ky ai co duong lien ket".
+   - Tep trong thu muc: tha tep .mp4 vao thu muc videos\ten-di-tich (chi hop voi video ngan, nhe).
+2. Nhap dup them-video.html, chon di tich, dan dia chi (hoac ten tep), bam "Them vao danh sach".
+3. Bam "Tai videos.js ve may", roi chep tep videos.js moi de len tep videos.js cu trong thu muc website.
+4. Tai ca thu muc website len mang lai (Netlify keo tha lai, hoac GitHub Upload files).
+
+LUU Y KHI DAT TEN TEP: chi dung chu khong dau, so, dau gach ngang. Khong dung khoang trang.
+Vi du dung:  gioi-thieu.mp4    gioi-thieu-vi.vtt    anh-bia.jpg
+Phu de (.vtt) phai luu bang ma hoa UTF-8 de khong loi dau tieng Viet.

@@ -1,0 +1,328 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Công cụ thêm video</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap">
+<style>
+/* Công cụ nội bộ cho giáo viên: chọn di tích, khai báo nguồn video, nhận lại tệp videos.js. */
+:root{
+  --font:"Be Vietnam Pro","Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif;
+  --bg:#f2f6f1; --surface:#fff; --ink:#13241b; --muted:#506157; --line:#d2dcd4;
+  --green:#1f5a42; --green-2:#2e7a58; --soft:#e2eee5; --laterite:#98481a; --laterite-soft:#f4e5d9;
+  --focus:#0b57d0; --btn-bg:#1f5a42; --btn-fg:#fff; --head-bg:#143d2d; --head-ink:#eef6f0; --ok:#1f6b45; --bad:#a3361b;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0d1712; --surface:#14221a; --ink:#e5eee7; --muted:#a2b3a8; --line:#27382e;
+    --green:#86d2a6; --green-2:#62b887; --soft:#1b3024; --laterite:#f0a672; --laterite-soft:#33231a;
+    --focus:#8ab4ff; --btn-bg:#86d2a6; --btn-fg:#0d1712; --head-bg:#0a1f16; --head-ink:#e9f3ec; --ok:#7fd1a2; --bad:#ff9d85; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0d1712; --surface:#14221a; --ink:#e5eee7; --muted:#a2b3a8; --line:#27382e;
+  --green:#86d2a6; --green-2:#62b887; --soft:#1b3024; --laterite:#f0a672; --laterite-soft:#33231a;
+  --focus:#8ab4ff; --btn-bg:#86d2a6; --btn-fg:#0d1712; --head-bg:#0a1f16; --head-ink:#e9f3ec; --ok:#7fd1a2; --bad:#ff9d85; color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{margin:0;font:400 16px/1.6 var(--font);background:var(--bg);color:var(--ink)}
+:focus-visible{outline:3px solid var(--focus);outline-offset:2px;border-radius:4px}
+.wrap{max-width:1080px;margin:0 auto;padding-inline:16px}
+header{background:var(--head-bg);color:var(--head-ink);padding-block:28px 24px}
+h1{margin:0;font-size:clamp(1.6rem,4vw,2.3rem);line-height:1.15;font-weight:800;text-wrap:balance}
+header p{margin:8px 0 0;color:color-mix(in srgb,var(--head-ink) 78%,transparent);max-width:64ch}
+.flow{display:flex;flex-wrap:wrap;gap:8px 10px;margin:18px 0 0;padding:0;list-style:none;counter-reset:f}
+.flow li{counter-increment:f;display:flex;align-items:center;gap:8px;font-size:.92rem;background:color-mix(in srgb,var(--head-ink) 12%,transparent);padding:6px 14px 6px 8px;border-radius:999px}
+.flow li::before{content:counter(f);display:grid;place-items:center;width:24px;height:24px;border-radius:50%;background:var(--head-ink);color:var(--head-bg);font-weight:700;font-size:.8rem}
+main{padding-block:24px 56px;display:grid;gap:20px}
+.grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:20px;align-items:start}
+@media (max-width:860px){.grid{grid-template-columns:minmax(0,1fr)}}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:20px}
+.card h2{margin:0 0 4px;font-size:1.15rem;color:var(--green)}
+.card .hint{margin:0 0 14px;color:var(--muted);font-size:.93rem}
+label,.lbl{display:block;font-size:.82rem;font-weight:600;color:var(--muted);margin:12px 0 4px}
+input[type=text],select,textarea{width:100%;min-height:46px;padding:9px 12px;border:1.5px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink);font:400 1rem var(--font)}
+textarea{min-height:200px;font:400 .85rem/1.5 ui-monospace,Consolas,monospace;resize:vertical}
+.kinds{display:grid;gap:8px}
+.kind{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border:1.5px solid var(--line);border-radius:12px;cursor:pointer;background:var(--bg)}
+.kind input{margin-top:5px;accent-color:var(--green-2)}
+.kind:has(input:checked){border-color:var(--green-2);background:var(--soft)}
+.kind b{display:block}
+.kind span{color:var(--muted);font-size:.88rem}
+.btn{min-height:46px;display:inline-flex;align-items:center;justify-content:center;padding:10px 18px;border-radius:10px;border:1.5px solid var(--btn-bg);background:var(--btn-bg);color:var(--btn-fg);font:600 .95rem var(--font);cursor:pointer}
+.btn.ghost{background:transparent;color:var(--green)}
+.btn.danger{background:transparent;color:var(--bad);border-color:var(--bad)}
+.btn.small{min-height:36px;padding:4px 12px;font-size:.85rem}
+.row{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
+.msg{min-height:1.5em;margin-top:10px;font-size:.93rem}
+.msg.ok{color:var(--ok)} .msg.bad{color:var(--bad)}
+.parse{font-size:.88rem;margin-top:4px;min-height:1.3em;color:var(--muted)}
+.parse.ok{color:var(--ok)} .parse.bad{color:var(--bad)}
+.path{font:500 .88rem ui-monospace,Consolas,monospace;background:var(--soft);padding:8px 12px;border-radius:8px;overflow-wrap:anywhere;margin-top:8px}
+.grp{margin-top:14px}
+.grp h3{margin:0 0 6px;font-size:1rem}
+.grp h3 small{color:var(--muted);font-weight:500}
+.item{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;align-items:center;padding:10px 12px;border:1px solid var(--line);border-radius:12px;margin-top:6px}
+.item .t{font-weight:600;overflow-wrap:anywhere}
+.item .d{color:var(--muted);font-size:.85rem;overflow-wrap:anywhere}
+.chip{display:inline-block;font-size:.72rem;font-weight:700;background:var(--soft);color:var(--green);padding:2px 9px;border-radius:999px;margin-right:6px}
+.ops{display:flex;gap:6px;flex-wrap:wrap}
+.empty{color:var(--muted);padding:14px;border:1.5px dashed var(--line);border-radius:12px;margin-top:10px}
+.note{background:var(--laterite-soft);border-radius:12px;padding:12px 16px;font-size:.93rem}
+.note b{color:var(--laterite)}
+.folders{font:400 .85rem/1.55 ui-monospace,Consolas,monospace;background:var(--soft);border-radius:12px;padding:14px 16px;overflow-x:auto;white-space:pre}
+@media (prefers-reduced-motion: reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <h1>Công cụ thêm video</h1>
+    <p>Khai báo video tự quay cho từng di tích rồi nhận lại tệp <b>videos.js</b>. Công cụ chạy ngay trên máy, không gửi gì lên mạng.</p>
+    <ol class="flow">
+      <li>Chọn di tích</li>
+      <li>Nhập nguồn video</li>
+      <li>Bấm Thêm</li>
+      <li>Tải videos.js về</li>
+      <li>Thay tệp trong thư mục website</li>
+    </ol>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="grid">
+    <section class="card" aria-labelledby="hform">
+      <h2 id="hform">Thêm một video</h2>
+      <p class="hint">Mỗi di tích có thể có nhiều video (ví dụ phần 1, phần 2, hoặc bản tiếng Việt và bản tiếng Anh).</p>
+
+      <label for="site">Di tích</label>
+      <select id="site"></select>
+
+      <div class="lbl">Video đang lưu ở đâu?</div>
+      <div class="kinds" role="radiogroup" aria-label="Nơi lưu video">
+        <label class="kind"><input type="radio" name="kind" value="youtube" checked><div><b>YouTube (khuyên dùng)</b><span>Dán địa chỉ video hoặc mã 11 ký tự. Nên để chế độ Không công khai.</span></div></label>
+        <label class="kind"><input type="radio" name="kind" value="drive"><div><b>Google Drive</b><span>Dán địa chỉ chia sẻ. Tệp phải để chế độ ai có đường liên kết đều xem được.</span></div></label>
+        <label class="kind"><input type="radio" name="kind" value="file"><div><b>Tệp trong thư mục</b><span>Video đã thả vào thư mục videos của di tích. Chỉ hợp với video ngắn, nhẹ.</span></div></label>
+      </div>
+
+      <div id="boxLink">
+        <label for="link" id="llink">Địa chỉ hoặc mã video</label>
+        <input type="text" id="link" autocomplete="off" placeholder="https://www.youtube.com/watch?v=...">
+        <div class="parse" id="parseLink" role="status" aria-live="polite"></div>
+      </div>
+
+      <div id="boxFile" hidden>
+        <div class="path" id="folderPath"></div>
+        <label for="fname">Tên tệp video (.mp4 hoặc .webm)</label>
+        <input type="text" id="fname" autocomplete="off" placeholder="gioi-thieu.mp4">
+        <div class="parse" id="pFname" role="status" aria-live="polite"></div>
+        <label for="fvi">Tên tệp phụ đề tiếng Việt (.vtt, có thể bỏ trống)</label>
+        <input type="text" id="fvi" autocomplete="off" placeholder="gioi-thieu-vi.vtt">
+        <div class="parse" id="pFvi"></div>
+        <label for="fen">Tên tệp phụ đề tiếng Anh (.vtt, có thể bỏ trống)</label>
+        <input type="text" id="fen" autocomplete="off" placeholder="gioi-thieu-en.vtt">
+        <div class="parse" id="pFen"></div>
+        <label for="fposter">Tên tệp ảnh bìa (.jpg, .png hoặc .webp, có thể bỏ trống)</label>
+        <input type="text" id="fposter" autocomplete="off" placeholder="anh-bia.jpg">
+        <div class="parse" id="pFposter"></div>
+      </div>
+
+      <label for="tvi">Tiêu đề tiếng Việt (có thể bỏ trống)</label>
+      <input type="text" id="tvi" autocomplete="off" placeholder="Giới thiệu địa đạo Vịnh Mốc">
+      <label for="ten">Tiêu đề tiếng Anh (có thể bỏ trống)</label>
+      <input type="text" id="ten" autocomplete="off" placeholder="Introducing the Vịnh Mốc Tunnels">
+
+      <div class="row"><button type="button" class="btn" id="add">Thêm vào danh sách</button></div>
+      <div class="msg" id="msg" role="status" aria-live="polite"></div>
+    </section>
+
+    <section class="card" aria-labelledby="hlist">
+      <h2 id="hlist">Danh sách video đã khai báo</h2>
+      <p class="hint" id="count"></p>
+      <div id="list"></div>
+    </section>
+  </div>
+
+  <section class="card" aria-labelledby="hout">
+    <h2 id="hout">Tệp videos.js</h2>
+    <p class="hint">Bấm một nút bên dưới để lấy nội dung. Sau đó thay tệp videos.js cũ trong thư mục website bằng tệp mới và tải cả thư mục lên mạng lại.</p>
+    <textarea id="out" readonly aria-label="Nội dung videos.js"></textarea>
+    <div class="row">
+      <button type="button" class="btn" id="copy">Sao chép nội dung</button>
+      <button type="button" class="btn" id="dl">Tải videos.js về máy</button>
+      <button type="button" class="btn ghost" id="imp">Nhập từ videos.js cũ</button>
+      <button type="button" class="btn danger" id="clr">Xóa tất cả</button>
+    </div>
+    <div class="msg" id="msg2" role="status" aria-live="polite"></div>
+    <div id="impBox" hidden>
+      <label for="impText">Dán toàn bộ nội dung tệp videos.js cũ vào đây</label>
+      <textarea id="impText" style="min-height:120px"></textarea>
+      <div class="row"><button type="button" class="btn" id="impGo">Nhập</button></div>
+    </div>
+  </section>
+
+  <section class="card" aria-labelledby="hfold">
+    <h2 id="hfold">Cấu trúc thư mục website</h2>
+    <p class="hint">Với video dạng tệp, thả video, phụ đề và ảnh bìa vào đúng thư mục của di tích.</p>
+    <div class="folders" id="tree"></div>
+    <div class="note" style="margin-top:14px"><b>Dung lượng.</b> Netlify khuyên giữ tổng dung lượng tải lên dưới khoảng 50 MB. GitHub chỉ nhận tệp dưới 25 MiB khi tải bằng trình duyệt. Vì vậy video dài nên để trên YouTube hoặc Google Drive, còn thư mục videos chỉ dành cho đoạn ngắn.</div>
+  </section>
+</main>
+
+<script>
+const SITES = [
+ ["ben-pha-gianh","Bến phà Gianh"],["hang-tam-co","Hang Tám Cô"],["pha-long-dai","Phà Long Đại"],["ben-pha-xuan-son","Bến phà Xuân Sơn"],
+ ["hien-luong-ben-hai","Đôi bờ Hiền Lương – Bến Hải"],["dia-dao-vinh-moc","Địa đạo Vịnh Mốc"],["thanh-co-quang-tri","Thành cổ Quảng Trị"],["san-bay-ta-con-khe-sanh","Sân bay Tà Cơn – Khe Sanh"]
+];
+const KEY = "dads-videos-tool";
+const $ = id => document.getElementById(id);
+let data = {};
+function emptyData() { const d = {}; SITES.forEach(s => d[s[0]] = []); return d; }
+function load() {
+  data = emptyData();
+  try { const o = JSON.parse(localStorage.getItem(KEY) || "{}"); SITES.forEach(s => { if (Array.isArray(o[s[0]])) data[s[0]] = o[s[0]]; }); } catch (e) {}
+}
+function save() { try { localStorage.setItem(KEY, JSON.stringify(data)); } catch (e) {} }
+
+/* nhận dạng địa chỉ */
+function ytId(s) {
+  s = (s || "").trim(); if (/^[\w-]{11}$/.test(s)) return s;
+  try {
+    const u = new URL(s), h = u.hostname.replace(/^www\./, ""); let id = "";
+    if (h === "youtu.be") id = u.pathname.split("/")[1] || "";
+    else if (h.endsWith("youtube.com") || h.endsWith("youtube-nocookie.com")) {
+      id = u.searchParams.get("v") || ""; const m = u.pathname.match(/\/(embed|shorts|live)\/([\w-]{11})/); if (!id && m) id = m[2];
+    }
+    return /^[\w-]{11}$/.test(id) ? id : "";
+  } catch (e) { return ""; }
+}
+function driveId(s) {
+  s = (s || "").trim(); let m = s.match(/\/d\/([\w-]{10,})/) || s.match(/[?&]id=([\w-]{10,})/);
+  if (m) return m[1]; return /^[\w-]{20,}$/.test(s) ? s : "";
+}
+function slugify(n) { return n.normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/đ/g, "d").replace(/Đ/g, "D").replace(/[^A-Za-z0-9._-]+/g, "-").replace(/-+/g, "-").replace(/^-|-$/g, ""); }
+function checkName(v, exts, required) {
+  v = (v || "").trim();
+  if (!v) return required ? { bad: "Hãy nhập tên tệp." } : { ok: "" };
+  if (!/^[A-Za-z0-9._-]+$/.test(v)) return { bad: "Tên tệp chỉ dùng chữ không dấu, số, dấu gạch ngang. Gợi ý: " + (slugify(v) || "ten-tep.mp4") };
+  const ext = (v.split(".").pop() || "").toLowerCase();
+  if (v.indexOf(".") < 0 || exts.indexOf(ext) < 0) return { bad: "Đuôi tệp phải là " + exts.map(e => "." + e).join(", ") + "." };
+  return { ok: "Hợp lệ" };
+}
+const kind = () => document.querySelector('input[name=kind]:checked').value;
+const curSlug = () => $("site").value;
+
+function showParse(el, r) { el.textContent = r.bad || (r.ok ? "✓ " + r.ok : ""); el.className = "parse " + (r.bad ? "bad" : r.ok ? "ok" : ""); }
+function liveCheck() {
+  const k = kind(), slug = curSlug();
+  $("boxLink").hidden = k === "file"; $("boxFile").hidden = k !== "file";
+  $("folderPath").textContent = "Thả tệp vào thư mục:  videos/" + slug + "/";
+  if (k === "youtube") { $("llink").textContent = "Địa chỉ hoặc mã video YouTube"; const v = $("link").value.trim(); const id = ytId(v); showParse($("parseLink"), !v ? {} : id ? { ok: "Mã video: " + id } : { bad: "Chưa nhận ra mã. Hãy dán địa chỉ dạng youtube.com/watch?v=… hoặc youtu.be/…" }); }
+  if (k === "drive") { $("llink").textContent = "Địa chỉ chia sẻ Google Drive"; const v = $("link").value.trim(); const id = driveId(v); showParse($("parseLink"), !v ? {} : id ? { ok: "Mã tệp: " + id.slice(0, 8) + "…" } : { bad: "Chưa nhận ra tệp. Địa chỉ cần có dạng drive.google.com/file/d/…" }); }
+  if (k === "file") {
+    showParse($("pFname"), $("fname").value.trim() ? checkName($("fname").value, ["mp4", "webm"], true) : {});
+    showParse($("pFvi"), checkName($("fvi").value, ["vtt"], false));
+    showParse($("pFen"), checkName($("fen").value, ["vtt"], false));
+    showParse($("pFposter"), checkName($("fposter").value, ["jpg", "jpeg", "png", "webp"], false));
+  }
+}
+function say(el, text, cls) { el.textContent = text; el.className = "msg " + (cls || ""); }
+
+function addEntry() {
+  const k = kind(), slug = curSlug(), e = { kind: k }, title = {};
+  const tv = $("tvi").value.trim(), te = $("ten").value.trim();
+  if (tv) title.vi = tv; if (te) title.en = te;
+  if (k === "youtube") { const id = ytId($("link").value); if (!id) return say($("msg"), "Chưa có mã YouTube hợp lệ. Xem dòng báo lỗi bên dưới ô nhập.", "bad"); e.id = id; }
+  else if (k === "drive") { const id = driveId($("link").value); if (!id) return say($("msg"), "Chưa có địa chỉ Google Drive hợp lệ.", "bad"); e.id = id; }
+  else {
+    const r = checkName($("fname").value, ["mp4", "webm"], true); if (r.bad) return say($("msg"), "Tên tệp video chưa đúng: " + r.bad, "bad");
+    const pre = "videos/" + slug + "/"; e.src = pre + $("fname").value.trim();
+    const subs = {}, vi = $("fvi").value.trim(), en = $("fen").value.trim(), po = $("fposter").value.trim();
+    const rv = checkName(vi, ["vtt"], false), re = checkName(en, ["vtt"], false), rp = checkName(po, ["jpg", "jpeg", "png", "webp"], false);
+    if (rv.bad || re.bad || rp.bad) return say($("msg"), "Có tên tệp phụ đề hoặc ảnh bìa chưa đúng. Xem dòng báo lỗi bên dưới từng ô.", "bad");
+    if (vi) subs.vi = pre + vi; if (en) subs.en = pre + en; if (Object.keys(subs).length) e.subs = subs;
+    if (po) e.poster = pre + po;
+  }
+  if (Object.keys(title).length) e.title = title;
+  data[slug].push(e); save(); render();
+  ["link", "fname", "fvi", "fen", "fposter", "tvi", "ten"].forEach(i => $(i).value = ""); liveCheck();
+  say($("msg"), "Đã thêm. Bước tiếp theo: tải videos.js về và thay tệp trong thư mục website.", "ok");
+}
+
+function desc(e) {
+  if (e.kind === "youtube") return "YouTube · mã " + e.id;
+  if (e.kind === "drive") return "Google Drive · mã " + e.id.slice(0, 8) + "…";
+  return "Tệp · " + e.src + (e.subs ? " · phụ đề " + Object.keys(e.subs).join(", ") : "");
+}
+const KIND = { youtube: "YouTube", drive: "Drive", file: "Tệp" };
+function render() {
+  let total = 0, h = "";
+  SITES.forEach(s => {
+    const a = data[s[0]]; total += a.length; if (!a.length) return;
+    h += '<div class="grp"><h3>' + s[1] + ' <small>(' + a.length + ' video)</small></h3>' + a.map((e, i) =>
+      '<div class="item"><div><div class="t"><span class="chip">' + KIND[e.kind] + '</span>' + esc((e.title && (e.title.vi || e.title.en)) || "Video " + (i + 1)) + '</div><div class="d">' + esc(desc(e)) + '</div></div>' +
+      '<div class="ops"><button type="button" class="btn ghost small" data-a="up" data-s="' + s[0] + '" data-i="' + i + '" aria-label="Chuyển lên">Lên</button>' +
+      '<button type="button" class="btn ghost small" data-a="down" data-s="' + s[0] + '" data-i="' + i + '" aria-label="Chuyển xuống">Xuống</button>' +
+      '<button type="button" class="btn danger small" data-a="del" data-s="' + s[0] + '" data-i="' + i + '" aria-label="Xóa video này">Xóa</button></div></div>').join("") + '</div>';
+  });
+  $("list").innerHTML = total ? h : '<div class="empty">Chưa có video nào. Điền biểu mẫu bên trái rồi bấm “Thêm vào danh sách”.</div>';
+  $("count").textContent = total ? "Tổng cộng " + total + " video cho " + SITES.filter(s => data[s[0]].length).length + " di tích." : "Danh sách sẽ hiện ở đây.";
+  $("out").value = build();
+  $("list").querySelectorAll("button").forEach(b => b.onclick = () => {
+    const a = data[b.dataset.s], i = +b.dataset.i;
+    if (b.dataset.a === "del") a.splice(i, 1);
+    if (b.dataset.a === "up" && i > 0) [a[i - 1], a[i]] = [a[i], a[i - 1]];
+    if (b.dataset.a === "down" && i < a.length - 1) [a[i + 1], a[i]] = [a[i], a[i + 1]];
+    save(); render();
+  });
+}
+function esc(s) { return String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c])); }
+
+function build() {
+  const o = {}; SITES.forEach(s => o[s[0]] = data[s[0]]);
+  return "/* Danh sách video của website Dấu ấn di sản Quảng Trị.\n   Tệp này do công cụ them-video.html tạo ra. Có thể sửa tay, nhưng giữ nguyên dấu ngoặc kép, dấu phẩy và dấu hai chấm. */\nwindow.DADS_VIDEOS = " + JSON.stringify(o, null, 1) + ";\n";
+}
+function tree() {
+  let t = "website-dau-an-di-san/\n  index.html          (trang web, thường không cần sửa)\n  videos.js           (danh sách video, do công cụ này tạo)\n  them-video.html     (công cụ này)\n  videos/\n";
+  SITES.forEach((s, i) => { t += "    " + s[0] + "/" + " ".repeat(26 - s[0].length) + "← video, phụ đề, ảnh bìa của " + s[1] + "\n"; });
+  $("tree").textContent = t;
+}
+
+$("add").onclick = addEntry;
+["link", "fname", "fvi", "fen", "fposter", "site"].forEach(i => $(i).addEventListener("input", liveCheck));
+document.querySelectorAll('input[name=kind]').forEach(r => r.addEventListener("change", () => { $("link").value = ""; liveCheck(); }));
+$("site").addEventListener("change", liveCheck);
+$("copy").onclick = async () => {
+  const t = build();
+  try { await navigator.clipboard.writeText(t); say($("msg2"), "Đã sao chép. Mở videos.js bằng Notepad, chọn tất cả, dán đè lên rồi lưu với mã hóa UTF-8.", "ok"); }
+  catch (e) { $("out").focus(); $("out").select(); say($("msg2"), "Trình duyệt không cho sao chép tự động. Nội dung đã được chọn sẵn, hãy nhấn Ctrl+C.", "bad"); }
+};
+$("dl").onclick = () => {
+  try {
+    const b = new Blob([build()], { type: "text/javascript;charset=utf-8" }), a = document.createElement("a");
+    a.href = URL.createObjectURL(b); a.download = "videos.js"; document.body.appendChild(a); a.click(); a.remove();
+    say($("msg2"), "Đã tải videos.js. Thay tệp này vào thư mục website rồi tải thư mục lên mạng lại.", "ok");
+  } catch (e) { say($("msg2"), "Không tải được. Hãy dùng nút Sao chép nội dung.", "bad"); }
+};
+$("imp").onclick = () => { $("impBox").hidden = !$("impBox").hidden; if (!$("impBox").hidden) $("impText").focus(); };
+$("impGo").onclick = () => {
+  try {
+    const t = $("impText").value, i = t.indexOf("DADS_VIDEOS"), s = t.indexOf("=", i), e = t.lastIndexOf("}");
+    if (i < 0 || s < 0 || e < s) throw 0;
+    const o = JSON.parse(t.slice(s + 1, e + 1)), d = emptyData();
+    SITES.forEach(x => { if (Array.isArray(o[x[0]])) d[x[0]] = o[x[0]].filter(v => v && ["youtube", "drive", "file"].indexOf(v.kind) >= 0); });
+    data = d; save(); render(); $("impBox").hidden = true; $("impText").value = ""; say($("msg2"), "Đã nhập danh sách video từ tệp cũ.", "ok");
+  } catch (err) { say($("msg2"), "Không đọc được nội dung này. Hãy dán đủ toàn bộ tệp videos.js, từ chữ window đến dấu chấm phẩy cuối.", "bad"); }
+};
+let armed = false;
+$("clr").onclick = () => {
+  if (!armed) { armed = true; $("clr").textContent = "Bấm lần nữa để xóa hết"; setTimeout(() => { armed = false; $("clr").textContent = "Xóa tất cả"; }, 4000); return; }
+  armed = false; $("clr").textContent = "Xóa tất cả"; data = emptyData(); save(); render(); say($("msg2"), "Đã xóa toàn bộ danh sách trong công cụ.", "ok");
+};
+
+$("site").innerHTML = SITES.map((s, i) => '<option value="' + s[0] + '">' + (i + 1) + ". " + s[1] + '</option>').join("");
+load(); tree(); liveCheck(); render();
+</script>
+</body>
+</html>
