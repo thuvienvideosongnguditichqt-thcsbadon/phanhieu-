@@ -29,7 +29,12 @@ window.DADS_VIDEOS = {
    "id": "bWxdCKlT8p4"
   }
  ],
- "hien-luong-ben-hai": [],
+ "hien-luong-ben-hai": [
+  {
+   "kind": "youtube",
+   "id": "uP12N05Sao8"
+  }
+ ],
  "dia-dao-vinh-moc": [
   {
    "kind": "youtube",
