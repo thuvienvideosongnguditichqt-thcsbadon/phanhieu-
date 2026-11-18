@@ -47,5 +47,10 @@ window.DADS_VIDEOS = {
    "id": "BLo9icswgtU"
   }
  ],
- "san-bay-ta-con-khe-sanh": []
+ "san-bay-ta-con-khe-sanh": [
+  {
+   "kind": "youtube",
+   "id": "eVhjwkxwZko"
+  }
+ ]
 };
