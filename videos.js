@@ -7,7 +7,12 @@ window.DADS_VIDEOS = {
    "id": "12_I9iPpnT0"
   }
  ],
- "hang-tam-co": [],
+ "hang-tam-co": [
+  {
+   "kind": "youtube",
+   "id": "bWxdCKlT8p4"
+  }
+ ],
  "pha-long-dai": [
   {
    "kind": "youtube",
