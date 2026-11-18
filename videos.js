@@ -41,6 +41,11 @@ window.DADS_VIDEOS = {
    "id": "pPyOM60_KwM"
   }
  ],
- "thanh-co-quang-tri": [],
+ "thanh-co-quang-tri": [
+  {
+   "kind": "youtube",
+   "id": "BLo9icswgtU"
+  }
+ ],
  "san-bay-ta-con-khe-sanh": []
 };
