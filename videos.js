@@ -8,10 +8,29 @@ window.DADS_VIDEOS = {
   }
  ],
  "hang-tam-co": [],
- "pha-long-dai": [],
- "ben-pha-xuan-son": [],
+ "pha-long-dai": [
+  {
+   "kind": "youtube",
+   "id": "X4yQyDQ0Lck"
+  }
+ ],
+ "hang-len-ha": [
+  {
+   "kind": "youtube",
+   "id": "VZ8h4dVRmoM"
+  },
+  {
+   "kind": "youtube",
+   "id": "bWxdCKlT8p4"
+  }
+ ],
  "hien-luong-ben-hai": [],
- "dia-dao-vinh-moc": [],
+ "dia-dao-vinh-moc": [
+  {
+   "kind": "youtube",
+   "id": "pPyOM60_KwM"
+  }
+ ],
  "thanh-co-quang-tri": [],
  "san-bay-ta-con-khe-sanh": []
 };
